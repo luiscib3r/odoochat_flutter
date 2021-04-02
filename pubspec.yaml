@@ -1,0 +1,15 @@
+name: odoochat
+description: A starting point for Dart libraries or applications.
+# version: 1.0.0
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  dio: ^4.0.0-prev3
+  dio_cookie_manager: ^2.0.0-prev1
+
+dev_dependencies:
+  pedantic: ^1.9.0
+  test: ^1.14.4
