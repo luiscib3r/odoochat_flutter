@@ -14,14 +14,14 @@ void main(List<String> args) async {
   final channels = await odooChat.initMessaging();
 
   // Find channel with admin
-  late int admin_channel;
+  late int adminChannel;
 
   channels.forEach((element) {
-    if (element.name.contains('admin')) admin_channel = element.id;
+    if (element.name.contains('admin')) adminChannel = element.id;
   });
 
   // Get messages
-  final messages = await odooChat.messageFetch(admin_channel);
+  final messages = await odooChat.messageFetch(adminChannel);
 
   messages.forEach((element) {
     print(element.author.name);
@@ -32,7 +32,7 @@ void main(List<String> args) async {
 
   // Send message
   await odooChat.messagePost(
-    channel_id: admin_channel,
+    channelId: adminChannel,
     body:
         'Probando desde OdooChat Flutter mensage: ${Random().nextInt(999999)}',
   );
