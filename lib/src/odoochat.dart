@@ -86,12 +86,12 @@ class OdooChat {
     }
   }
 
-  Future<List<MessageModel>> messageFetch(int channel_id) async {
+  Future<List<MessageModel>> messageFetch(int channelId) async {
     if (_stateProvider.user != null) {
       final response = await _httpClient.post(
         url: OdooAPI.MESSAGE_FETCH,
         data: MessageFetchPayload(
-          channel_id: channel_id,
+          channelId: channelId,
           context: _stateProvider.user!.context,
         ).payload,
       );
@@ -117,7 +117,7 @@ class OdooChat {
   }
 
   Future<void> messagePost({
-    required int channel_id,
+    required int channelId,
     required String body,
     List<int> attachmentIds = const [],
   }) async {
@@ -125,7 +125,7 @@ class OdooChat {
       await _httpClient.post(
         url: OdooAPI.MESSAGE_POST,
         data: MessagePostPayload(
-          channel_id: channel_id,
+          channelId: channelId,
           body: body,
           context: _stateProvider.user!.context,
         ).payload,

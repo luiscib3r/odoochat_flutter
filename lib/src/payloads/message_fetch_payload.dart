@@ -5,7 +5,7 @@ class MessageFetchPayload {
   Map<String, dynamic> get payload => _payload;
 
   MessageFetchPayload({
-    required int channel_id,
+    required int channelId,
     required Map<String, dynamic> context,
   }) : _payload = {
           'id': Random().nextInt(999999999),
@@ -19,7 +19,7 @@ class MessageFetchPayload {
                 [
                   'channel_ids',
                   'in',
-                  [channel_id]
+                  [channelId]
                 ]
               ],
               'limit': 30,

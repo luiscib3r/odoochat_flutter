@@ -5,7 +5,7 @@ class MessagePostPayload {
   Map<String, dynamic> get payload => _payload;
 
   MessagePostPayload({
-    required int channel_id,
+    required int channelId,
     required String body,
     required Map<String, dynamic> context,
     List<int> attachmentIds = const [],
@@ -14,7 +14,7 @@ class MessagePostPayload {
           'jsonrpc': '2.0',
           'method': 'call',
           'params': {
-            'args': [channel_id],
+            'args': [channelId],
             'kwargs': {
               'attachment_ids': attachmentIds,
               'body': body,
