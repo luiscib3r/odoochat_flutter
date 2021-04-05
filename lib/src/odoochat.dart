@@ -31,6 +31,12 @@ class OdooChat {
           databaseName: databaseName,
         );
 
+  OdooChat.loadState(Map<String, dynamic> map)
+      : _stateProvider = StateProvider.fromJson(map),
+        _httpClient = HttpClient(
+          serverUrl: map['serverUrl'],
+        );
+
   Future<void> login() async {
     try {
       final response = await _httpClient.post(
@@ -159,4 +165,6 @@ class OdooChat {
           'You have logged in for the first time, please try again.');
     }
   }
+
+  Map<String, dynamic> get state => _stateProvider.toJson();
 }
