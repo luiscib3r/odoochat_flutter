@@ -16,6 +16,8 @@ class OdooChat {
 
   int lastPoll = 0;
 
+  int? get userId => _stateProvider.user?.uid;
+
   OdooChat({
     required String serverUrl,
     required String username,
