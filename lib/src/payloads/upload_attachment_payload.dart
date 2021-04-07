@@ -15,6 +15,7 @@ class UploadAttachmentPayload {
           file,
           filename: fileName,
         ),
+        'callback': '',
       });
 
   UploadAttachmentPayload({
