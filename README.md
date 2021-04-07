@@ -54,3 +54,8 @@ void main(List<String> args) async {
   }
 }
 ```
+
+
+### Odoo 14 NOTE
+
+For Odoo 14 remove the `subtype` field in `MessagePostPayload`

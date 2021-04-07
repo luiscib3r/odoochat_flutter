@@ -1,3 +1,7 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import 'package:odoochat/src/api.dart';
 import 'package:odoochat/src/models/channel_model.dart';
 import 'package:odoochat/src/models/message_model.dart';
@@ -7,6 +11,7 @@ import 'package:odoochat/src/payloads/login_payload.dart';
 import 'package:odoochat/src/payloads/message_fetch_payload.dart';
 import 'package:odoochat/src/payloads/message_post_payload.dart';
 import 'package:odoochat/src/payloads/poll_payload.dart';
+import 'package:odoochat/src/payloads/upload_attachment_payload.dart';
 import 'package:odoochat/src/providers/httpclient_provider.dart';
 import 'package:odoochat/src/providers/state_provider.dart';
 
@@ -125,14 +130,18 @@ class OdooChat {
     List<int> attachmentIds = const [],
   }) async {
     if (_stateProvider.user != null) {
-      await _httpClient.post(
+      final response = await _httpClient.post(
         url: OdooAPI.MESSAGE_POST,
         data: MessagePostPayload(
           channelId: channelId,
           body: body,
           context: _stateProvider.user!.context,
+          attachmentIds: attachmentIds,
         ).payload,
       );
+
+      print(response.statusCode);
+      print(response.data);
     } else {
       await login();
 
@@ -166,6 +175,85 @@ class OdooChat {
 
       throw Exception(
           'You have logged in for the first time, please try again.');
+    }
+  }
+
+  Future<String> get csrfToken async {
+    final response = await _httpClient.get(url: '/web');
+
+    final document = response.data as String;
+
+    final csrfToken = document
+        .split('csrf_token:')
+        .last
+        .split(',')
+        .first
+        .replaceAll('"', '')
+        .replaceAll(' ', '');
+
+    return csrfToken;
+  }
+
+  Future<int?> uploadAttachment(String fileName, Uint8List file) async {
+    try {
+      final token = await csrfToken;
+      print(token);
+
+      final response = await _httpClient.post(
+        url: OdooAPI.UPLOAD_ATTACHMENT,
+        data: UploadAttachmentPayload(
+          fileName: fileName,
+          file: file,
+          token: token,
+        ).payload,
+      );
+
+      if (response.statusCode == 200) {
+        final data = response.data as String;
+
+        final fileId = int.parse(
+          data.split('"id"').last.split(',').first.replaceAll(': ', ''),
+        );
+
+        return fileId;
+      }
+    } on DioError catch (e) {
+      print(e.response?.statusCode);
+      print(e.response?.data);
+    }
+  }
+
+  Future<List<int>?> downloadAttachment(int id) async {
+    try {
+      final url = OdooAPI.DOWNLOAD_ATTACHMENT.replaceAll('ID', '$id');
+
+      final response = await _httpClient.getFile(url: url);
+
+      if (response.statusCode == 200) return response.data;
+    } on DioError catch (e) {
+      print(e.response?.statusCode);
+      print(e.response?.data);
+    }
+  }
+
+  Future<List<int>?> downloadImage(int id, String resolution) async {
+    try {
+      final url = OdooAPI.DOWNLOAD_IMAGE
+          .replaceAll(
+            'ID',
+            '$id',
+          )
+          .replaceAll(
+            'RESOLUTION',
+            resolution,
+          );
+
+      final response = await _httpClient.getFile(url: url);
+
+      if (response.statusCode == 200) return response.data;
+    } on DioError catch (e) {
+      print(e.response?.statusCode);
+      print(e.response?.data);
     }
   }
 

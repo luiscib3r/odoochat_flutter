@@ -45,4 +45,17 @@ class HttpClient {
 
     return response;
   }
+
+  Future<Response<List<int>>> getFile({
+    required String url,
+  }) async {
+    final response = await http.get<List<int>>(
+      '${serverUrl + url}',
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
+
+    return response;
+  }
 }

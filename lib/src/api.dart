@@ -13,4 +13,13 @@ abstract class OdooAPI {
 
   // POLL
   static const POLL = '/longpolling/poll';
+
+  // UPLOAD FILES
+  static const UPLOAD_ATTACHMENT = '/web/binary/upload_attachment';
+
+  // DOWNLOAD FILES
+  static const DOWNLOAD_ATTACHMENT = '/web/content/ir.attachment/ID/datas';
+
+  // DOWNLOAD IMAGE
+  static const DOWNLOAD_IMAGE = '/web/image/ID/RESOLUTION/?crop=true';
 }
