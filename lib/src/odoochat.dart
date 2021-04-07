@@ -130,7 +130,7 @@ class OdooChat {
     List<int> attachmentIds = const [],
   }) async {
     if (_stateProvider.user != null) {
-      final response = await _httpClient.post(
+      await _httpClient.post(
         url: OdooAPI.MESSAGE_POST,
         data: MessagePostPayload(
           channelId: channelId,
