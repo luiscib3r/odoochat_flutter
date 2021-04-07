@@ -139,9 +139,6 @@ class OdooChat {
           attachmentIds: attachmentIds,
         ).payload,
       );
-
-      print(response.statusCode);
-      print(response.data);
     } else {
       await login();
 
@@ -197,7 +194,6 @@ class OdooChat {
   Future<int?> uploadAttachment(String fileName, Uint8List file) async {
     try {
       final token = await csrfToken;
-      print(token);
 
       final response = await _httpClient.post(
         url: OdooAPI.UPLOAD_ATTACHMENT,
