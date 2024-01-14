@@ -69,8 +69,22 @@ Future<void> main(List<String> args) async {
           print('Is a new channel notification');
           print(data);
         case PollMessageInfo(data: final MessageInfo data):
-          print('Is an info message'); // ex: typing
-          print(data);
+          print('Is an info message'); // ex: typing, or bot messages
+          switch (data) {
+            case MessageInfoTyping(
+                isTyping: final bool isTyping,
+                partnerId: final int partnerId,
+                partnerName: final String partnerName,
+              ):
+              print('Partner id: $partnerId');
+              print('Partner name: $partnerName');
+              print('Is typing: $isTyping');
+
+            case MessageInfoTransient(
+                body: final String body,
+              ):
+              print('Transient message: $body');
+          }
       }
     }
   }

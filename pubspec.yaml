@@ -1,7 +1,10 @@
 name: odoochat
-description: Dart package to connect to Odoo chat
+description: Dart package to connect to Odoo Discuss Module
 version: 2.0.0
-homepage: https://github.com/luiscib3r/odoochat_flutter
+homepage: https://www.luisciber.com
+repository: https://github.com/luiscib3r/odoochat_flutter
+issue_tracker: https://github.com/luiscib3r/odoochat_flutter/issues
+topics: [odoo, chat, messaging]
 
 environment:
   sdk: ^3.0.0
