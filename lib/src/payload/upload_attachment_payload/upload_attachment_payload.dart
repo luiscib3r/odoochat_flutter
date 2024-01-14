@@ -1,8 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:equatable/equatable.dart';
 
-class UploadAttachmentPayload {
+class UploadAttachmentPayload extends Equatable {
+  const UploadAttachmentPayload({
+    required this.file,
+    required this.fileName,
+    required this.token,
+  });
+
   final String token;
   final Uint8List file;
   final String fileName;
@@ -18,9 +25,10 @@ class UploadAttachmentPayload {
         'callback': '',
       });
 
-  UploadAttachmentPayload({
-    required this.file,
-    required this.fileName,
-    required this.token,
-  });
+  @override
+  List<Object?> get props => [
+        token,
+        file,
+        fileName,
+      ];
 }
