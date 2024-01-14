@@ -5,6 +5,7 @@ import 'package:odoochat/odoochat.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 export 'api/odoochat_api.dart';
+export 'exceptions/exceptions.dart';
 export 'model/model.dart';
 export 'payload/payload.dart';
 
@@ -13,7 +14,8 @@ class OdooChat {
     required String serverUrl,
     required String databaseName,
     bool debug = false,
-  }) : _databaseName = databaseName {
+  })  : _databaseName = databaseName,
+        _debugMode = debug {
     _dio = Dio(
       BaseOptions(
         baseUrl: serverUrl,
@@ -42,6 +44,7 @@ class OdooChat {
   late final Dio _dio;
   late final OdooChatApi _api;
   final String _databaseName;
+  final bool _debugMode;
 
   LoginResult? get loginResult => _loginResult;
   LoginResult? _loginResult;
@@ -60,41 +63,84 @@ class OdooChat {
       ),
     );
 
+    if (response.error != null) {
+      if (_debugMode) {
+        // ignore: avoid_print
+        print(response.error);
+      }
+      throw OdooChatException(
+        code: response.error!.code,
+        message: response.error!.message,
+      );
+    }
+
     _loginResult = response.result;
 
-    return response.result;
+    return response.result!;
   }
 
-  Future<InitMessagingResult> initMessaging() async {
+  Future<T> _proccess<T>({
+    required Future<RpcResponse<T>> Function() action,
+  }) async {
     if (_loginResult == null) {
-      throw Exception('You must login first. Please call login method.');
+      throw OdooChatException(
+        code: 403,
+        message: 'You must login first. Please call login method.',
+      );
     }
 
-    final response = await _api.initMessaging(
-      RpcPayload.from(
-        params: InitMessagingParams(
-          context: _loginResult!.userContext,
-        ),
-      ),
-    );
+    final response = await action();
 
-    return response.result;
-  }
-
-  Future<List<Message>> messageFetch(int channelId) async {
-    if (_loginResult == null) {
-      throw Exception('You must login first. Please call login method.');
+    if (response.error != null) {
+      if (_debugMode) {
+        // ignore: avoid_print
+        print(response.error);
+      }
+      throw OdooChatException(
+        code: response.error!.code,
+        message: response.error!.message,
+      );
     }
 
-    final response = await _api.messageFetch(
-      RpcPayload.from(
-        params: MessageFetchParams(
-          context: _loginResult!.userContext,
-          channelId: channelId,
-        ),
-      ),
-    );
-
-    return response.result;
+    return response.result!;
   }
+
+  Future<InitMessagingResult> initMessaging() => _proccess(
+        action: () => _api.initMessaging(
+          RpcPayload.from(
+            params: InitMessagingParams(
+              context: _loginResult!.userContext,
+            ),
+          ),
+        ),
+      );
+
+  Future<List<Message>> fetchMessages(int channelId) => _proccess(
+        action: () => _api.messageFetch(
+          RpcPayload.from(
+            params: MessageFetchParams(
+              context: _loginResult!.userContext,
+              channelId: channelId,
+            ),
+          ),
+        ),
+      );
+
+  Future<int> sendMessage({
+    required int channelId,
+    required String message,
+    List<int> attachmentIds = const [],
+  }) =>
+      _proccess(
+        action: () => _api.messagePost(
+          RpcPayload.from(
+            params: MessagePostParams(
+              context: _loginResult!.userContext,
+              channelId: channelId,
+              body: message,
+              attachmentIds: attachmentIds,
+            ),
+          ),
+        ),
+      );
 }

@@ -119,29 +119,34 @@ class _OdooChatApi implements OdooChatApi {
   }
 
   @override
-  Future<String> messagePost(RpcPayload<MessagePostParams> payload) async {
+  Future<RpcResponse<int>> messagePost(
+      RpcPayload<MessagePostParams> payload) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson((value) => value.toJson()));
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<RpcResponse<int>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/web/dataset/call_kw/mail.channel/message_post',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data!;
+            .compose(
+              _dio.options,
+              '/web/dataset/call_kw/mail.channel/message_post',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RpcResponse<int>.fromJson(
+      _result.data!,
+      (json) => json as int,
+    );
     return value;
   }
 

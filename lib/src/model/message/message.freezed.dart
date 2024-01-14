@@ -23,8 +23,8 @@ mixin _$Message {
   int get id => throw _privateConstructorUsedError;
   String get body => throw _privateConstructorUsedError;
   String get date => throw _privateConstructorUsedError;
-  @JsonKey(name: 'author_id')
-  List<dynamic> get authorId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+  MessageAuthor get author => throw _privateConstructorUsedError;
   @JsonKey(name: 'email_from')
   String get emailFrom => throw _privateConstructorUsedError;
   @JsonKey(name: 'message_type')
@@ -42,8 +42,8 @@ mixin _$Message {
   List<int> get partnerIds => throw _privateConstructorUsedError;
   @JsonKey(name: 'starred_partner_ids')
   List<int> get starredPartnerIds => throw _privateConstructorUsedError;
-  @JsonKey(name: 'moderation_status')
-  bool get moderationStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: 'moderation_status', fromJson: Message.parseModerationStatus)
+  String? get moderationStatus => throw _privateConstructorUsedError;
   List<int> get notifications => throw _privateConstructorUsedError;
   @JsonKey(name: 'attachment_ids')
   List<int> get attachmentIds => throw _privateConstructorUsedError;
@@ -80,7 +80,8 @@ abstract class $MessageCopyWith<$Res> {
       {int id,
       String body,
       String date,
-      @JsonKey(name: 'author_id') List<dynamic> authorId,
+      @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+      MessageAuthor author,
       @JsonKey(name: 'email_from') String emailFrom,
       @JsonKey(name: 'message_type') String messageType,
       @JsonKey(name: 'subtype_id') List<dynamic> subtypeId,
@@ -90,7 +91,9 @@ abstract class $MessageCopyWith<$Res> {
       @JsonKey(name: 'channel_ids') List<int> channelIds,
       @JsonKey(name: 'partner_ids') List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids') List<int> starredPartnerIds,
-      @JsonKey(name: 'moderation_status') bool moderationStatus,
+      @JsonKey(
+          name: 'moderation_status', fromJson: Message.parseModerationStatus)
+      String? moderationStatus,
       List<int> notifications,
       @JsonKey(name: 'attachment_ids') List<int> attachmentIds,
       @JsonKey(name: 'tracking_value_ids') List<int> trackingValueIds,
@@ -102,6 +105,8 @@ abstract class $MessageCopyWith<$Res> {
       @JsonKey(name: 'is_notification') bool isNotification,
       @JsonKey(name: 'module_icon') String moduleIcon,
       @JsonKey(name: 'sms_ids') List<int> smsIds});
+
+  $MessageAuthorCopyWith<$Res> get author;
 }
 
 /// @nodoc
@@ -120,7 +125,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? id = null,
     Object? body = null,
     Object? date = null,
-    Object? authorId = null,
+    Object? author = null,
     Object? emailFrom = null,
     Object? messageType = null,
     Object? subtypeId = null,
@@ -130,7 +135,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? channelIds = null,
     Object? partnerIds = null,
     Object? starredPartnerIds = null,
-    Object? moderationStatus = null,
+    Object? moderationStatus = freezed,
     Object? notifications = null,
     Object? attachmentIds = null,
     Object? trackingValueIds = null,
@@ -156,10 +161,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
-      authorId: null == authorId
-          ? _value.authorId
-          : authorId // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as MessageAuthor,
       emailFrom: null == emailFrom
           ? _value.emailFrom
           : emailFrom // ignore: cast_nullable_to_non_nullable
@@ -196,10 +201,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.starredPartnerIds
           : starredPartnerIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      moderationStatus: null == moderationStatus
+      moderationStatus: freezed == moderationStatus
           ? _value.moderationStatus
           : moderationStatus // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as String?,
       notifications: null == notifications
           ? _value.notifications
           : notifications // ignore: cast_nullable_to_non_nullable
@@ -246,6 +251,14 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
               as List<int>,
     ) as $Val);
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $MessageAuthorCopyWith<$Res> get author {
+    return $MessageAuthorCopyWith<$Res>(_value.author, (value) {
+      return _then(_value.copyWith(author: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -259,7 +272,8 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       {int id,
       String body,
       String date,
-      @JsonKey(name: 'author_id') List<dynamic> authorId,
+      @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+      MessageAuthor author,
       @JsonKey(name: 'email_from') String emailFrom,
       @JsonKey(name: 'message_type') String messageType,
       @JsonKey(name: 'subtype_id') List<dynamic> subtypeId,
@@ -269,7 +283,9 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       @JsonKey(name: 'channel_ids') List<int> channelIds,
       @JsonKey(name: 'partner_ids') List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids') List<int> starredPartnerIds,
-      @JsonKey(name: 'moderation_status') bool moderationStatus,
+      @JsonKey(
+          name: 'moderation_status', fromJson: Message.parseModerationStatus)
+      String? moderationStatus,
       List<int> notifications,
       @JsonKey(name: 'attachment_ids') List<int> attachmentIds,
       @JsonKey(name: 'tracking_value_ids') List<int> trackingValueIds,
@@ -281,6 +297,9 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       @JsonKey(name: 'is_notification') bool isNotification,
       @JsonKey(name: 'module_icon') String moduleIcon,
       @JsonKey(name: 'sms_ids') List<int> smsIds});
+
+  @override
+  $MessageAuthorCopyWith<$Res> get author;
 }
 
 /// @nodoc
@@ -297,7 +316,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? id = null,
     Object? body = null,
     Object? date = null,
-    Object? authorId = null,
+    Object? author = null,
     Object? emailFrom = null,
     Object? messageType = null,
     Object? subtypeId = null,
@@ -307,7 +326,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? channelIds = null,
     Object? partnerIds = null,
     Object? starredPartnerIds = null,
-    Object? moderationStatus = null,
+    Object? moderationStatus = freezed,
     Object? notifications = null,
     Object? attachmentIds = null,
     Object? trackingValueIds = null,
@@ -333,10 +352,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as String,
-      authorId: null == authorId
-          ? _value._authorId
-          : authorId // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+      author: null == author
+          ? _value.author
+          : author // ignore: cast_nullable_to_non_nullable
+              as MessageAuthor,
       emailFrom: null == emailFrom
           ? _value.emailFrom
           : emailFrom // ignore: cast_nullable_to_non_nullable
@@ -373,10 +392,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value._starredPartnerIds
           : starredPartnerIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      moderationStatus: null == moderationStatus
+      moderationStatus: freezed == moderationStatus
           ? _value.moderationStatus
           : moderationStatus // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as String?,
       notifications: null == notifications
           ? _value._notifications
           : notifications // ignore: cast_nullable_to_non_nullable
@@ -432,7 +451,8 @@ class _$MessageImpl implements _Message {
       {required this.id,
       required this.body,
       required this.date,
-      @JsonKey(name: 'author_id') required final List<dynamic> authorId,
+      @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+      required this.author,
       @JsonKey(name: 'email_from') required this.emailFrom,
       @JsonKey(name: 'message_type') required this.messageType,
       @JsonKey(name: 'subtype_id') required final List<dynamic> subtypeId,
@@ -443,7 +463,9 @@ class _$MessageImpl implements _Message {
       @JsonKey(name: 'partner_ids') required final List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids')
       required final List<int> starredPartnerIds,
-      @JsonKey(name: 'moderation_status') required this.moderationStatus,
+      @JsonKey(
+          name: 'moderation_status', fromJson: Message.parseModerationStatus)
+      required this.moderationStatus,
       required final List<int> notifications,
       @JsonKey(name: 'attachment_ids') required final List<int> attachmentIds,
       @JsonKey(name: 'tracking_value_ids')
@@ -458,8 +480,7 @@ class _$MessageImpl implements _Message {
       @JsonKey(name: 'is_notification') required this.isNotification,
       @JsonKey(name: 'module_icon') required this.moduleIcon,
       @JsonKey(name: 'sms_ids') required final List<int> smsIds})
-      : _authorId = authorId,
-        _subtypeId = subtypeId,
+      : _subtypeId = subtypeId,
         _channelIds = channelIds,
         _partnerIds = partnerIds,
         _starredPartnerIds = starredPartnerIds,
@@ -479,15 +500,9 @@ class _$MessageImpl implements _Message {
   final String body;
   @override
   final String date;
-  final List<dynamic> _authorId;
   @override
-  @JsonKey(name: 'author_id')
-  List<dynamic> get authorId {
-    if (_authorId is EqualUnmodifiableListView) return _authorId;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_authorId);
-  }
-
+  @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+  final MessageAuthor author;
   @override
   @JsonKey(name: 'email_from')
   final String emailFrom;
@@ -540,8 +555,8 @@ class _$MessageImpl implements _Message {
   }
 
   @override
-  @JsonKey(name: 'moderation_status')
-  final bool moderationStatus;
+  @JsonKey(name: 'moderation_status', fromJson: Message.parseModerationStatus)
+  final String? moderationStatus;
   final List<int> _notifications;
   @override
   List<int> get notifications {
@@ -615,7 +630,7 @@ class _$MessageImpl implements _Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, body: $body, date: $date, authorId: $authorId, emailFrom: $emailFrom, messageType: $messageType, subtypeId: $subtypeId, model: $model, resId: $resId, recordName: $recordName, channelIds: $channelIds, partnerIds: $partnerIds, starredPartnerIds: $starredPartnerIds, moderationStatus: $moderationStatus, notifications: $notifications, attachmentIds: $attachmentIds, trackingValueIds: $trackingValueIds, needactionPartnerIds: $needactionPartnerIds, historyPartnerIds: $historyPartnerIds, isNote: $isNote, isDiscussion: $isDiscussion, subtypeDescription: $subtypeDescription, isNotification: $isNotification, moduleIcon: $moduleIcon, smsIds: $smsIds)';
+    return 'Message(id: $id, body: $body, date: $date, author: $author, emailFrom: $emailFrom, messageType: $messageType, subtypeId: $subtypeId, model: $model, resId: $resId, recordName: $recordName, channelIds: $channelIds, partnerIds: $partnerIds, starredPartnerIds: $starredPartnerIds, moderationStatus: $moderationStatus, notifications: $notifications, attachmentIds: $attachmentIds, trackingValueIds: $trackingValueIds, needactionPartnerIds: $needactionPartnerIds, historyPartnerIds: $historyPartnerIds, isNote: $isNote, isDiscussion: $isDiscussion, subtypeDescription: $subtypeDescription, isNotification: $isNotification, moduleIcon: $moduleIcon, smsIds: $smsIds)';
   }
 
   @override
@@ -626,7 +641,7 @@ class _$MessageImpl implements _Message {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.body, body) || other.body == body) &&
             (identical(other.date, date) || other.date == date) &&
-            const DeepCollectionEquality().equals(other._authorId, _authorId) &&
+            (identical(other.author, author) || other.author == author) &&
             (identical(other.emailFrom, emailFrom) ||
                 other.emailFrom == emailFrom) &&
             (identical(other.messageType, messageType) ||
@@ -674,7 +689,7 @@ class _$MessageImpl implements _Message {
         id,
         body,
         date,
-        const DeepCollectionEquality().hash(_authorId),
+        author,
         emailFrom,
         messageType,
         const DeepCollectionEquality().hash(_subtypeId),
@@ -717,7 +732,8 @@ abstract class _Message implements Message {
       {required final int id,
       required final String body,
       required final String date,
-      @JsonKey(name: 'author_id') required final List<dynamic> authorId,
+      @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+      required final MessageAuthor author,
       @JsonKey(name: 'email_from') required final String emailFrom,
       @JsonKey(name: 'message_type') required final String messageType,
       @JsonKey(name: 'subtype_id') required final List<dynamic> subtypeId,
@@ -728,7 +744,9 @@ abstract class _Message implements Message {
       @JsonKey(name: 'partner_ids') required final List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids')
       required final List<int> starredPartnerIds,
-      @JsonKey(name: 'moderation_status') required final bool moderationStatus,
+      @JsonKey(
+          name: 'moderation_status', fromJson: Message.parseModerationStatus)
+      required final String? moderationStatus,
       required final List<int> notifications,
       @JsonKey(name: 'attachment_ids') required final List<int> attachmentIds,
       @JsonKey(name: 'tracking_value_ids')
@@ -755,8 +773,8 @@ abstract class _Message implements Message {
   @override
   String get date;
   @override
-  @JsonKey(name: 'author_id')
-  List<dynamic> get authorId;
+  @JsonKey(name: 'author_id', fromJson: MessageAuthor.fromList)
+  MessageAuthor get author;
   @override
   @JsonKey(name: 'email_from')
   String get emailFrom;
@@ -784,8 +802,8 @@ abstract class _Message implements Message {
   @JsonKey(name: 'starred_partner_ids')
   List<int> get starredPartnerIds;
   @override
-  @JsonKey(name: 'moderation_status')
-  bool get moderationStatus;
+  @JsonKey(name: 'moderation_status', fromJson: Message.parseModerationStatus)
+  String? get moderationStatus;
   @override
   List<int> get notifications;
   @override
@@ -821,5 +839,177 @@ abstract class _Message implements Message {
   @override
   @JsonKey(ignore: true)
   _$$MessageImplCopyWith<_$MessageImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+MessageAuthor _$MessageAuthorFromJson(Map<String, dynamic> json) {
+  return _MessageAuthor.fromJson(json);
+}
+
+/// @nodoc
+mixin _$MessageAuthor {
+  int get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String? get company => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MessageAuthorCopyWith<MessageAuthor> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $MessageAuthorCopyWith<$Res> {
+  factory $MessageAuthorCopyWith(
+          MessageAuthor value, $Res Function(MessageAuthor) then) =
+      _$MessageAuthorCopyWithImpl<$Res, MessageAuthor>;
+  @useResult
+  $Res call({int id, String name, String? company});
+}
+
+/// @nodoc
+class _$MessageAuthorCopyWithImpl<$Res, $Val extends MessageAuthor>
+    implements $MessageAuthorCopyWith<$Res> {
+  _$MessageAuthorCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? company = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      company: freezed == company
+          ? _value.company
+          : company // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$MessageAuthorImplCopyWith<$Res>
+    implements $MessageAuthorCopyWith<$Res> {
+  factory _$$MessageAuthorImplCopyWith(
+          _$MessageAuthorImpl value, $Res Function(_$MessageAuthorImpl) then) =
+      __$$MessageAuthorImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id, String name, String? company});
+}
+
+/// @nodoc
+class __$$MessageAuthorImplCopyWithImpl<$Res>
+    extends _$MessageAuthorCopyWithImpl<$Res, _$MessageAuthorImpl>
+    implements _$$MessageAuthorImplCopyWith<$Res> {
+  __$$MessageAuthorImplCopyWithImpl(
+      _$MessageAuthorImpl _value, $Res Function(_$MessageAuthorImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? company = freezed,
+  }) {
+    return _then(_$MessageAuthorImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      company: freezed == company
+          ? _value.company
+          : company // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$MessageAuthorImpl implements _MessageAuthor {
+  const _$MessageAuthorImpl(
+      {required this.id, required this.name, this.company});
+
+  factory _$MessageAuthorImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MessageAuthorImplFromJson(json);
+
+  @override
+  final int id;
+  @override
+  final String name;
+  @override
+  final String? company;
+
+  @override
+  String toString() {
+    return 'MessageAuthor(id: $id, name: $name, company: $company)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$MessageAuthorImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.company, company) || other.company == company));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, company);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$MessageAuthorImplCopyWith<_$MessageAuthorImpl> get copyWith =>
+      __$$MessageAuthorImplCopyWithImpl<_$MessageAuthorImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MessageAuthorImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _MessageAuthor implements MessageAuthor {
+  const factory _MessageAuthor(
+      {required final int id,
+      required final String name,
+      final String? company}) = _$MessageAuthorImpl;
+
+  factory _MessageAuthor.fromJson(Map<String, dynamic> json) =
+      _$MessageAuthorImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  String get name;
+  @override
+  String? get company;
+  @override
+  @JsonKey(ignore: true)
+  _$$MessageAuthorImplCopyWith<_$MessageAuthorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

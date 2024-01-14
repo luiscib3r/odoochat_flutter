@@ -34,15 +34,24 @@ Future<void> main(List<String> args) async {
   print(messagingResult.channelSlots.privateGroups);
 
   // Fetch messages
-  final messages = await odooChat.messageFetch(
+  final messages = await odooChat.fetchMessages(
     messagingResult.channelSlots.channels.first.id,
   );
 
   print('Messages: ');
   for (final message in messages.reversed) {
     print(message.emailFrom);
+    print(message.author);
     print(message.body);
     print(message.date);
     print('\n');
   }
+
+  // Send message
+  final newMessageId = await odooChat.sendMessage(
+    channelId: messagingResult.channelSlots.channels.first.id,
+    message: 'Test message from OdooChat Flutter',
+  );
+
+  print('New message id: $newMessageId');
 }

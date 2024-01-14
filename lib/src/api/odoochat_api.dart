@@ -29,7 +29,7 @@ abstract class OdooChatApi {
   );
 
   @POST('/web/dataset/call_kw/mail.channel/message_post')
-  Future<String> messagePost(
+  Future<RpcResponse<int>> messagePost(
     @Body() RpcPayload<MessagePostParams> payload,
   );
 

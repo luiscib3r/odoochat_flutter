@@ -11,7 +11,7 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int,
       body: json['body'] as String,
       date: json['date'] as String,
-      authorId: json['author_id'] as List<dynamic>,
+      author: MessageAuthor.fromList(json['author_id'] as List),
       emailFrom: json['email_from'] as String,
       messageType: json['message_type'] as String,
       subtypeId: json['subtype_id'] as List<dynamic>,
@@ -25,7 +25,8 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       starredPartnerIds: (json['starred_partner_ids'] as List<dynamic>)
           .map((e) => e as int)
           .toList(),
-      moderationStatus: json['moderation_status'] as bool,
+      moderationStatus:
+          Message.parseModerationStatus(json['moderation_status']),
       notifications: (json['notifications'] as List<dynamic>)
           .map((e) => e as int)
           .toList(),
@@ -54,7 +55,7 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'id': instance.id,
       'body': instance.body,
       'date': instance.date,
-      'author_id': instance.authorId,
+      'author_id': instance.author,
       'email_from': instance.emailFrom,
       'message_type': instance.messageType,
       'subtype_id': instance.subtypeId,
@@ -76,4 +77,18 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'is_notification': instance.isNotification,
       'module_icon': instance.moduleIcon,
       'sms_ids': instance.smsIds,
+    };
+
+_$MessageAuthorImpl _$$MessageAuthorImplFromJson(Map<String, dynamic> json) =>
+    _$MessageAuthorImpl(
+      id: json['id'] as int,
+      name: json['name'] as String,
+      company: json['company'] as String?,
+    );
+
+Map<String, dynamic> _$$MessageAuthorImplToJson(_$MessageAuthorImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'company': instance.company,
     };
