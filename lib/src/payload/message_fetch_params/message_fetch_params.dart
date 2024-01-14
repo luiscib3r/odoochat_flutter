@@ -7,7 +7,7 @@ part 'message_fetch_params.g.dart';
 class MessageFetchParams with _$MessageFetchParams {
   factory MessageFetchParams({
     required Map<String, dynamic> context,
-    required String channelId,
+    required int channelId,
     int limit = 30,
   }) =>
       MessageFetchParams._(
@@ -23,8 +23,8 @@ class MessageFetchParams with _$MessageFetchParams {
             ]
           ],
         },
-        method: 'fetch_messages',
-        model: 'mail.channel',
+        method: 'message_fetch',
+        model: 'mail.message',
       );
 
   const factory MessageFetchParams._({

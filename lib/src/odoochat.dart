@@ -2,9 +2,9 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:odoochat/odoochat.dart';
-import 'package:odoochat/src/api/odoochat_api.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+export 'api/odoochat_api.dart';
 export 'model/model.dart';
 export 'payload/payload.dart';
 
@@ -12,9 +12,8 @@ class OdooChat {
   OdooChat({
     required String serverUrl,
     required String databaseName,
+    bool debug = false,
   }) : _databaseName = databaseName {
-    const isRelease = bool.fromEnvironment('dart.vm.product');
-
     _dio = Dio(
       BaseOptions(
         baseUrl: serverUrl,
@@ -25,12 +24,12 @@ class OdooChat {
           CookieManager(
             CookieJar(),
           ),
-          // if (!isRelease)
-          PrettyDioLogger(
-            requestHeader: true,
-            requestBody: true,
-            responseHeader: true,
-          ),
+          if (debug)
+            PrettyDioLogger(
+              requestHeader: true,
+              requestBody: true,
+              responseHeader: true,
+            ),
         ],
       );
 
@@ -44,7 +43,10 @@ class OdooChat {
   late final OdooChatApi _api;
   final String _databaseName;
 
-  Future<void> login({
+  LoginResult? get loginResult => _loginResult;
+  LoginResult? _loginResult;
+
+  Future<LoginResult> login({
     required String username,
     required String password,
   }) async {
@@ -58,6 +60,41 @@ class OdooChat {
       ),
     );
 
-    print(response);
+    _loginResult = response.result;
+
+    return response.result;
+  }
+
+  Future<InitMessagingResult> initMessaging() async {
+    if (_loginResult == null) {
+      throw Exception('You must login first. Please call login method.');
+    }
+
+    final response = await _api.initMessaging(
+      RpcPayload.from(
+        params: InitMessagingParams(
+          context: _loginResult!.userContext,
+        ),
+      ),
+    );
+
+    return response.result;
+  }
+
+  Future<List<Message>> messageFetch(int channelId) async {
+    if (_loginResult == null) {
+      throw Exception('You must login first. Please call login method.');
+    }
+
+    final response = await _api.messageFetch(
+      RpcPayload.from(
+        params: MessageFetchParams(
+          context: _loginResult!.userContext,
+          channelId: channelId,
+        ),
+      ),
+    );
+
+    return response.result;
   }
 }

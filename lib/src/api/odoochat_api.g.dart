@@ -19,83 +19,102 @@ class _OdooChatApi implements OdooChatApi {
   String? baseUrl;
 
   @override
-  Future<String> login(RpcPayload<LoginParams> payload) async {
+  Future<RpcResponse<LoginResult>> login(
+      RpcPayload<LoginParams> payload) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson((value) => value.toJson()));
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RpcResponse<LoginResult>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/web/session/authenticate',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data!;
+            .compose(
+              _dio.options,
+              '/web/session/authenticate',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RpcResponse<LoginResult>.fromJson(
+      _result.data!,
+      (json) => LoginResult.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<String> initMessaging(RpcPayload<InitMessagingParams> payload) async {
+  Future<RpcResponse<InitMessagingResult>> initMessaging(
+      RpcPayload<InitMessagingParams> payload) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson((value) => value.toJson()));
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RpcResponse<InitMessagingResult>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/mail/init_messaging',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data!;
+            .compose(
+              _dio.options,
+              '/mail/init_messaging',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RpcResponse<InitMessagingResult>.fromJson(
+      _result.data!,
+      (json) => InitMessagingResult.fromJson(json as Map<String, dynamic>),
+    );
     return value;
   }
 
   @override
-  Future<String> messageFetch(RpcPayload<MessageFetchParams> payload) async {
+  Future<RpcResponse<List<Message>>> messageFetch(
+      RpcPayload<MessageFetchParams> payload) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(payload.toJson((value) => value.toJson()));
-    final _result = await _dio.fetch<String>(_setStreamType<String>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RpcResponse<List<Message>>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/web/dataset/call_kw/mail.message/message_fetch',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        ))));
-    final value = _result.data!;
+            .compose(
+              _dio.options,
+              '/web/dataset/call_kw/mail.message/message_fetch',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RpcResponse<List<Message>>.fromJson(
+      _result.data!,
+      (json) => json is List<dynamic>
+          ? json
+              .map<Message>((i) => Message.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
+    );
     return value;
   }
 

@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'rpc_payload.g.dart';
 
-@JsonSerializable(genericArgumentFactories: true)
+@JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
 class RpcPayload<T> extends Equatable {
   const RpcPayload({
     required this.id,
@@ -13,7 +13,7 @@ class RpcPayload<T> extends Equatable {
     required this.method,
     required this.params,
   });
-  
+
   factory RpcPayload.from({
     required T params,
   }) =>

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:odoochat/odoochat.dart';
 import 'package:retrofit/retrofit.dart';
 
+export 'responses/responses.dart';
+
 part 'odoochat_api.g.dart';
 
 @RestApi()
@@ -12,17 +14,17 @@ abstract class OdooChatApi {
   }) = _OdooChatApi;
 
   @POST('/web/session/authenticate')
-  Future<String> login(
+  Future<RpcResponse<LoginResult>> login(
     @Body() RpcPayload<LoginParams> payload,
   );
 
   @POST('/mail/init_messaging')
-  Future<String> initMessaging(
+  Future<RpcResponse<InitMessagingResult>> initMessaging(
     @Body() RpcPayload<InitMessagingParams> payload,
   );
 
   @POST('/web/dataset/call_kw/mail.message/message_fetch')
-  Future<String> messageFetch(
+  Future<RpcResponse<List<Message>>> messageFetch(
     @Body() RpcPayload<MessageFetchParams> payload,
   );
 
