@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:odoochat/src/model/attachment/attachment.dart';
 
 part 'message.freezed.dart';
 part 'message.g.dart';
@@ -23,7 +24,7 @@ class Message with _$Message {
     @JsonKey(name: 'moderation_status', fromJson: Message.parseModerationStatus)
     required String? moderationStatus,
     required List<int> notifications,
-    @JsonKey(name: 'attachment_ids') required List<int> attachmentIds,
+    @JsonKey(name: 'attachment_ids') required List<Attachment> atachments,
     @JsonKey(name: 'tracking_value_ids') required List<int> trackingValueIds,
     @JsonKey(name: 'needaction_partner_ids')
     required List<int> needactionPartnerIds,

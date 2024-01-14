@@ -34,7 +34,7 @@ abstract class OdooChatApi {
   );
 
   @POST('/longpolling/poll')
-  Future<String> poll(
+  Future<RpcResponse<List<PollResult>>> poll(
     @Body() RpcPayload<PollParams> payload,
   );
 }

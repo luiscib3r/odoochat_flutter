@@ -54,4 +54,24 @@ Future<void> main(List<String> args) async {
   );
 
   print('New message id: $newMessageId');
+
+  // Poll
+  while (await Future<bool>.delayed(const Duration(seconds: 3), () => true)) {
+    final results = await odooChat.poll();
+
+    for (final result in results) {
+      print('\n');
+      switch (result.message) {
+        case PollMessageMessage(data: final Message data):
+          print('Is a message');
+          print(data);
+        case PollMessageChannel(data: final Channel data):
+          print('Is a new channel notification');
+          print(data);
+        case PollMessageInfo(data: final MessageInfo data):
+          print('Is an info message'); // ex: typing
+          print(data);
+      }
+    }
+  }
 }

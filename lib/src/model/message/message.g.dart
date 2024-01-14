@@ -30,8 +30,8 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       notifications: (json['notifications'] as List<dynamic>)
           .map((e) => e as int)
           .toList(),
-      attachmentIds: (json['attachment_ids'] as List<dynamic>)
-          .map((e) => e as int)
+      atachments: (json['attachment_ids'] as List<dynamic>)
+          .map((e) => Attachment.fromJson(e as Map<String, dynamic>))
           .toList(),
       trackingValueIds: (json['tracking_value_ids'] as List<dynamic>)
           .map((e) => e as int)
@@ -55,7 +55,7 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'id': instance.id,
       'body': instance.body,
       'date': instance.date,
-      'author_id': instance.author,
+      'author_id': instance.author.toJson(),
       'email_from': instance.emailFrom,
       'message_type': instance.messageType,
       'subtype_id': instance.subtypeId,
@@ -67,7 +67,7 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'starred_partner_ids': instance.starredPartnerIds,
       'moderation_status': instance.moderationStatus,
       'notifications': instance.notifications,
-      'attachment_ids': instance.attachmentIds,
+      'attachment_ids': instance.atachments.map((e) => e.toJson()).toList(),
       'tracking_value_ids': instance.trackingValueIds,
       'needaction_partner_ids': instance.needactionPartnerIds,
       'history_partner_ids': instance.historyPartnerIds,

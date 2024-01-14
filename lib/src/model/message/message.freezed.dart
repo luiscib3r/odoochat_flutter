@@ -46,7 +46,7 @@ mixin _$Message {
   String? get moderationStatus => throw _privateConstructorUsedError;
   List<int> get notifications => throw _privateConstructorUsedError;
   @JsonKey(name: 'attachment_ids')
-  List<int> get attachmentIds => throw _privateConstructorUsedError;
+  List<Attachment> get atachments => throw _privateConstructorUsedError;
   @JsonKey(name: 'tracking_value_ids')
   List<int> get trackingValueIds => throw _privateConstructorUsedError;
   @JsonKey(name: 'needaction_partner_ids')
@@ -95,7 +95,7 @@ abstract class $MessageCopyWith<$Res> {
           name: 'moderation_status', fromJson: Message.parseModerationStatus)
       String? moderationStatus,
       List<int> notifications,
-      @JsonKey(name: 'attachment_ids') List<int> attachmentIds,
+      @JsonKey(name: 'attachment_ids') List<Attachment> atachments,
       @JsonKey(name: 'tracking_value_ids') List<int> trackingValueIds,
       @JsonKey(name: 'needaction_partner_ids') List<int> needactionPartnerIds,
       @JsonKey(name: 'history_partner_ids') List<int> historyPartnerIds,
@@ -137,7 +137,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? starredPartnerIds = null,
     Object? moderationStatus = freezed,
     Object? notifications = null,
-    Object? attachmentIds = null,
+    Object? atachments = null,
     Object? trackingValueIds = null,
     Object? needactionPartnerIds = null,
     Object? historyPartnerIds = null,
@@ -209,10 +209,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.notifications
           : notifications // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      attachmentIds: null == attachmentIds
-          ? _value.attachmentIds
-          : attachmentIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+      atachments: null == atachments
+          ? _value.atachments
+          : atachments // ignore: cast_nullable_to_non_nullable
+              as List<Attachment>,
       trackingValueIds: null == trackingValueIds
           ? _value.trackingValueIds
           : trackingValueIds // ignore: cast_nullable_to_non_nullable
@@ -287,7 +287,7 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
           name: 'moderation_status', fromJson: Message.parseModerationStatus)
       String? moderationStatus,
       List<int> notifications,
-      @JsonKey(name: 'attachment_ids') List<int> attachmentIds,
+      @JsonKey(name: 'attachment_ids') List<Attachment> atachments,
       @JsonKey(name: 'tracking_value_ids') List<int> trackingValueIds,
       @JsonKey(name: 'needaction_partner_ids') List<int> needactionPartnerIds,
       @JsonKey(name: 'history_partner_ids') List<int> historyPartnerIds,
@@ -328,7 +328,7 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? starredPartnerIds = null,
     Object? moderationStatus = freezed,
     Object? notifications = null,
-    Object? attachmentIds = null,
+    Object? atachments = null,
     Object? trackingValueIds = null,
     Object? needactionPartnerIds = null,
     Object? historyPartnerIds = null,
@@ -400,10 +400,10 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value._notifications
           : notifications // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      attachmentIds: null == attachmentIds
-          ? _value._attachmentIds
-          : attachmentIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+      atachments: null == atachments
+          ? _value._atachments
+          : atachments // ignore: cast_nullable_to_non_nullable
+              as List<Attachment>,
       trackingValueIds: null == trackingValueIds
           ? _value._trackingValueIds
           : trackingValueIds // ignore: cast_nullable_to_non_nullable
@@ -467,7 +467,8 @@ class _$MessageImpl implements _Message {
           name: 'moderation_status', fromJson: Message.parseModerationStatus)
       required this.moderationStatus,
       required final List<int> notifications,
-      @JsonKey(name: 'attachment_ids') required final List<int> attachmentIds,
+      @JsonKey(name: 'attachment_ids')
+      required final List<Attachment> atachments,
       @JsonKey(name: 'tracking_value_ids')
       required final List<int> trackingValueIds,
       @JsonKey(name: 'needaction_partner_ids')
@@ -485,7 +486,7 @@ class _$MessageImpl implements _Message {
         _partnerIds = partnerIds,
         _starredPartnerIds = starredPartnerIds,
         _notifications = notifications,
-        _attachmentIds = attachmentIds,
+        _atachments = atachments,
         _trackingValueIds = trackingValueIds,
         _needactionPartnerIds = needactionPartnerIds,
         _historyPartnerIds = historyPartnerIds,
@@ -565,13 +566,13 @@ class _$MessageImpl implements _Message {
     return EqualUnmodifiableListView(_notifications);
   }
 
-  final List<int> _attachmentIds;
+  final List<Attachment> _atachments;
   @override
   @JsonKey(name: 'attachment_ids')
-  List<int> get attachmentIds {
-    if (_attachmentIds is EqualUnmodifiableListView) return _attachmentIds;
+  List<Attachment> get atachments {
+    if (_atachments is EqualUnmodifiableListView) return _atachments;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_attachmentIds);
+    return EqualUnmodifiableListView(_atachments);
   }
 
   final List<int> _trackingValueIds;
@@ -630,7 +631,7 @@ class _$MessageImpl implements _Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, body: $body, date: $date, author: $author, emailFrom: $emailFrom, messageType: $messageType, subtypeId: $subtypeId, model: $model, resId: $resId, recordName: $recordName, channelIds: $channelIds, partnerIds: $partnerIds, starredPartnerIds: $starredPartnerIds, moderationStatus: $moderationStatus, notifications: $notifications, attachmentIds: $attachmentIds, trackingValueIds: $trackingValueIds, needactionPartnerIds: $needactionPartnerIds, historyPartnerIds: $historyPartnerIds, isNote: $isNote, isDiscussion: $isDiscussion, subtypeDescription: $subtypeDescription, isNotification: $isNotification, moduleIcon: $moduleIcon, smsIds: $smsIds)';
+    return 'Message(id: $id, body: $body, date: $date, author: $author, emailFrom: $emailFrom, messageType: $messageType, subtypeId: $subtypeId, model: $model, resId: $resId, recordName: $recordName, channelIds: $channelIds, partnerIds: $partnerIds, starredPartnerIds: $starredPartnerIds, moderationStatus: $moderationStatus, notifications: $notifications, atachments: $atachments, trackingValueIds: $trackingValueIds, needactionPartnerIds: $needactionPartnerIds, historyPartnerIds: $historyPartnerIds, isNote: $isNote, isDiscussion: $isDiscussion, subtypeDescription: $subtypeDescription, isNotification: $isNotification, moduleIcon: $moduleIcon, smsIds: $smsIds)';
   }
 
   @override
@@ -663,7 +664,7 @@ class _$MessageImpl implements _Message {
             const DeepCollectionEquality()
                 .equals(other._notifications, _notifications) &&
             const DeepCollectionEquality()
-                .equals(other._attachmentIds, _attachmentIds) &&
+                .equals(other._atachments, _atachments) &&
             const DeepCollectionEquality()
                 .equals(other._trackingValueIds, _trackingValueIds) &&
             const DeepCollectionEquality()
@@ -701,7 +702,7 @@ class _$MessageImpl implements _Message {
         const DeepCollectionEquality().hash(_starredPartnerIds),
         moderationStatus,
         const DeepCollectionEquality().hash(_notifications),
-        const DeepCollectionEquality().hash(_attachmentIds),
+        const DeepCollectionEquality().hash(_atachments),
         const DeepCollectionEquality().hash(_trackingValueIds),
         const DeepCollectionEquality().hash(_needactionPartnerIds),
         const DeepCollectionEquality().hash(_historyPartnerIds),
@@ -748,7 +749,8 @@ abstract class _Message implements Message {
           name: 'moderation_status', fromJson: Message.parseModerationStatus)
       required final String? moderationStatus,
       required final List<int> notifications,
-      @JsonKey(name: 'attachment_ids') required final List<int> attachmentIds,
+      @JsonKey(name: 'attachment_ids')
+      required final List<Attachment> atachments,
       @JsonKey(name: 'tracking_value_ids')
       required final List<int> trackingValueIds,
       @JsonKey(name: 'needaction_partner_ids')
@@ -808,7 +810,7 @@ abstract class _Message implements Message {
   List<int> get notifications;
   @override
   @JsonKey(name: 'attachment_ids')
-  List<int> get attachmentIds;
+  List<Attachment> get atachments;
   @override
   @JsonKey(name: 'tracking_value_ids')
   List<int> get trackingValueIds;

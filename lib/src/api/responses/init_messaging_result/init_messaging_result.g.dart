@@ -23,8 +23,8 @@ Map<String, dynamic> _$$InitMessagingResultImplToJson(
     <String, dynamic>{
       'needaction_inbox_counter': instance.needactionInboxCounter,
       'starred_counter': instance.starredCounter,
-      'channel_slots': instance.channelSlots,
-      'current_partner': instance.currentPartner,
+      'channel_slots': instance.channelSlots.toJson(),
+      'current_partner': instance.currentPartner.toJson(),
       'current_user_id': instance.currentUserId,
     };
 
@@ -43,7 +43,9 @@ _$ChannelSlotsImpl _$$ChannelSlotsImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ChannelSlotsImplToJson(_$ChannelSlotsImpl instance) =>
     <String, dynamic>{
-      'channel_channel': instance.channels,
-      'channel_direct_message': instance.directMessages,
-      'channel_private_group': instance.privateGroups,
+      'channel_channel': instance.channels.map((e) => e.toJson()).toList(),
+      'channel_direct_message':
+          instance.directMessages.map((e) => e.toJson()).toList(),
+      'channel_private_group':
+          instance.privateGroups.map((e) => e.toJson()).toList(),
     };

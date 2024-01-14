@@ -71,6 +71,7 @@ class OdooChat {
       throw OdooChatException(
         code: response.error!.code,
         message: response.error!.message,
+        data: response.error!.data,
       );
     }
 
@@ -142,5 +143,25 @@ class OdooChat {
             ),
           ),
         ),
+      );
+
+  int _lastPoll = 0;
+  Future<List<PollResult>> poll({
+    int? last,
+  }) =>
+      _proccess(
+        action: () async {
+          final response = await _api.poll(
+            RpcPayload.from(
+              params: PollParams(
+                last: last ?? _lastPoll,
+              ),
+            ),
+          );
+
+          _lastPoll = response.result?.last.id ?? _lastPoll;
+
+          return response;
+        },
       );
 }

@@ -19,15 +19,20 @@ class Channel with _$Channel {
     @JsonKey(name: 'group_based_subscription')
     required bool groupBasedSubscription,
     @JsonKey(name: 'create_uid') required int createUid,
-    @JsonKey(name: 'last_message_id') required int lastMessageId,
     @JsonKey(name: 'message_needaction_counter')
     required int messageNeedactionCounter,
     @JsonKey(name: 'message_unread_counter') required int messageUnreadCounter,
-    @JsonKey(name: 'seen_message_id') required int seenMessageId,
     @JsonKey(name: 'custom_channel_name') required bool customChannelName,
     @JsonKey(name: 'is_pinned') required bool isPinned,
+    @JsonKey(name: 'last_message_id', fromJson: Channel.parseIntNullable)
+    int? lastMessageId,
+    @JsonKey(name: 'seen_message_id', fromJson: Channel.parseIntNullable)
+    int? seenMessageId,
   }) = _Channel;
 
   factory Channel.fromJson(Map<String, dynamic> json) =>
       _$ChannelFromJson(json);
+
+  static int? parseIntNullable(dynamic value) =>
+      value is bool ? null : value as int?;
 }

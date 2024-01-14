@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'rpc_response.freezed.dart';
 part 'rpc_response.g.dart';
 
-@JsonSerializable(genericArgumentFactories: true, explicitToJson: true)
+@JsonSerializable(genericArgumentFactories: true)
 class RpcResponse<T> extends Equatable {
   const RpcResponse({
     required this.jsonrpc,
