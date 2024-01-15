@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
@@ -96,19 +98,57 @@ class ChatBloc extends Cubit<OdooChatState> {
     emit(state.copyWith(currentChannel: channel));
     final result = await odooChat.fetchMessages(channel.id);
 
-    final messages = result.map(
-      (e) => TextMessage(
-        id: e.id.toString(),
-        author: User(
+    final messages = await Future.wait(
+      result.map((e) async {
+        final author = User(
           id: e.author.id.toString(),
           firstName: e.author.name,
-        ),
-        text: Bidi.stripHtmlIfNeeded(e.body).trim(),
-        createdAt: DateTime.parse(e.date).millisecondsSinceEpoch,
-      ),
+        );
+
+        final attachments = await Future.wait(
+          e.atachments.map(
+            (attach) async {
+              final saveFile = await odooChat.downloadAttachment(attach);
+
+              if (attach.mimetype == 'image/jpeg' ||
+                  attach.mimetype == 'image/png') {
+                return ImageMessage(
+                  author: author,
+                  id: 'attach-${attach.id}',
+                  name: attach.filename,
+                  size: saveFile.lengthSync(),
+                  uri: saveFile.path,
+                );
+              }
+
+              return FileMessage(
+                author: author,
+                id: 'attach-${attach.id}',
+                name: attach.filename,
+                size: saveFile.lengthSync(),
+                uri: saveFile.path,
+              );
+            },
+          ),
+        );
+
+        return [
+          TextMessage(
+            id: e.id.toString(),
+            author: author,
+            text: Bidi.stripHtmlIfNeeded(e.body).trim(),
+            createdAt: DateTime.parse(e.date).millisecondsSinceEpoch,
+          ),
+          ...attachments,
+        ];
+      }),
     );
 
-    emit(state.copyWith(messages: messages.toList()));
+    emit(
+      state.copyWith(
+        messages: messages.expand((e) => e).toList(),
+      ),
+    );
   }
 
   void exitChannel() =>

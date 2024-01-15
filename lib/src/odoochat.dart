@@ -1,7 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:odoochat/odoochat.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 export 'api/odoochat_api.dart';
@@ -166,4 +171,41 @@ class OdooChat {
           return response;
         },
       );
+
+  String getAttachmentUrl(int id) {
+    return '${_dio.options.baseUrl}/web/content/ir.attachment/$id/datas';
+  }
+
+  Future<Uint8List> getAttachment(int id) async {
+    final response = await _dio.get<Uint8List>(
+      '/web/content/ir.attachment/$id/datas',
+      options: Options(
+        responseType: ResponseType.bytes,
+        contentType: ContentType.binary.value,
+      ),
+    );
+
+    if (response.data == null) {
+      throw OdooChatException(
+        code: 404,
+        message: 'Attachment not found',
+        data: {
+          'id': id,
+        },
+      );
+    }
+
+    return Uint8List.fromList(response.data!);
+  }
+
+  Future<File> downloadAttachment(Attachment attachment) async {
+    final directory = await getTemporaryDirectory();
+    final savePath = join(directory.path, attachment.filename);
+    final data = await getAttachment(attachment.id);
+
+    final file = File(savePath);
+    await file.writeAsBytes(data);
+
+    return File(savePath);
+  }
 }
