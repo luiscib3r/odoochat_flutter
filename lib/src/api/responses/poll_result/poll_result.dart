@@ -8,9 +8,8 @@ part 'poll_result.g.dart';
 class PollResult with _$PollResult {
   const factory PollResult({
     required int id,
-    required List<dynamic> channel,
-    @JsonKey(fromJson: PollMessage.fromResult)
-    required PollMessage<dynamic> message,
+    List<dynamic>? channel,
+    @JsonKey(fromJson: PollMessage.fromResult) PollMessage<dynamic>? message,
   }) = _PollResult;
 
   factory PollResult.fromJson(Map<String, dynamic> json) =>
@@ -20,7 +19,13 @@ class PollResult with _$PollResult {
 sealed class PollMessage<T> {
   const PollMessage(this.data);
 
-  static PollMessage<dynamic> fromResult(Map<String, dynamic> json) {
+  static PollMessage<dynamic>? fromResult(Map<String, dynamic>? json) {
+    print(json);
+
+    if (json == null) {
+      return null;
+    }
+
     if (json['message_type'] != null) {
       return PollMessageMessage.fromJson(json);
     }

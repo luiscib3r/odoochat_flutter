@@ -10,9 +10,9 @@ class InitMessagingResult with _$InitMessagingResult {
     @JsonKey(name: 'needaction_inbox_counter')
     required int needactionInboxCounter,
     @JsonKey(name: 'starred_counter') required int starredCounter,
-    @JsonKey(name: 'channel_slots') required ChannelSlots channelSlots,
     @JsonKey(name: 'current_partner') required Partner currentPartner,
     @JsonKey(name: 'current_user_id') required int currentUserId,
+    @JsonKey(name: 'channel_slots') ChannelSlots? channelSlots,
   }) = _InitMessagingResult;
 
   factory InitMessagingResult.fromJson(Map<String, dynamic> json) =>

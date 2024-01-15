@@ -9,7 +9,7 @@ import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:odoochat/odoochat.dart'
-    show OdooChat, PollMessageMessage, PollResult;
+    show Channel, OdooChat, PollMessageMessage, PollResult;
 
 // ignore: always_use_package_imports
 import 'chat_poll/chat_poll.dart';
@@ -37,11 +37,14 @@ class ChatBloc extends Cubit<OdooChatState> {
 
     final result = await odooChat.initMessaging();
 
-    final channels = [
-      ...result.channelSlots.channels,
-      ...result.channelSlots.privateGroups,
-      ...result.channelSlots.directMessages,
-    ].map((e) => AppChannel(id: e.id, name: e.name));
+    final channels = (result.channelSlots != null
+            ? [
+                ...result.channelSlots!.channels,
+                ...result.channelSlots!.privateGroups,
+                ...result.channelSlots!.directMessages,
+              ]
+            : <Channel>[])
+        .map((e) => AppChannel(id: e.id, name: e.name));
 
     emit(
       state.copyWith(
@@ -59,10 +62,11 @@ class ChatBloc extends Cubit<OdooChatState> {
 
   Future<void> _handlePollResults(List<PollResult> results) async {
     final newMessagesFuture = results
-        .where((e) => (e.channel.last as int) == state.currentChannel?.id)
+        .where((e) => e.channel != null && e.channel!.isNotEmpty)
+        .where((e) => (e.channel!.last as int) == state.currentChannel?.id)
         .map((e) async {
-      if (e.message is PollMessageMessage) {
-        final message = (e.message as PollMessageMessage).data;
+      if (e.message != null && e.message is PollMessageMessage) {
+        final message = (e.message! as PollMessageMessage).data;
 
         final author = User(
           firstName: message.author.name,

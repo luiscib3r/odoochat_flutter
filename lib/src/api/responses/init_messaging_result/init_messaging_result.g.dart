@@ -11,11 +11,13 @@ _$InitMessagingResultImpl _$$InitMessagingResultImplFromJson(
     _$InitMessagingResultImpl(
       needactionInboxCounter: json['needaction_inbox_counter'] as int,
       starredCounter: json['starred_counter'] as int,
-      channelSlots:
-          ChannelSlots.fromJson(json['channel_slots'] as Map<String, dynamic>),
       currentPartner:
           Partner.fromJson(json['current_partner'] as Map<String, dynamic>),
       currentUserId: json['current_user_id'] as int,
+      channelSlots: json['channel_slots'] == null
+          ? null
+          : ChannelSlots.fromJson(
+              json['channel_slots'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$InitMessagingResultImplToJson(
@@ -23,9 +25,9 @@ Map<String, dynamic> _$$InitMessagingResultImplToJson(
     <String, dynamic>{
       'needaction_inbox_counter': instance.needactionInboxCounter,
       'starred_counter': instance.starredCounter,
-      'channel_slots': instance.channelSlots.toJson(),
       'current_partner': instance.currentPartner.toJson(),
       'current_user_id': instance.currentUserId,
+      'channel_slots': instance.channelSlots?.toJson(),
     };
 
 _$ChannelSlotsImpl _$$ChannelSlotsImplFromJson(Map<String, dynamic> json) =>

@@ -24,12 +24,12 @@ mixin _$InitMessagingResult {
   int get needactionInboxCounter => throw _privateConstructorUsedError;
   @JsonKey(name: 'starred_counter')
   int get starredCounter => throw _privateConstructorUsedError;
-  @JsonKey(name: 'channel_slots')
-  ChannelSlots get channelSlots => throw _privateConstructorUsedError;
   @JsonKey(name: 'current_partner')
   Partner get currentPartner => throw _privateConstructorUsedError;
   @JsonKey(name: 'current_user_id')
   int get currentUserId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'channel_slots')
+  ChannelSlots? get channelSlots => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,12 +46,12 @@ abstract class $InitMessagingResultCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'needaction_inbox_counter') int needactionInboxCounter,
       @JsonKey(name: 'starred_counter') int starredCounter,
-      @JsonKey(name: 'channel_slots') ChannelSlots channelSlots,
       @JsonKey(name: 'current_partner') Partner currentPartner,
-      @JsonKey(name: 'current_user_id') int currentUserId});
+      @JsonKey(name: 'current_user_id') int currentUserId,
+      @JsonKey(name: 'channel_slots') ChannelSlots? channelSlots});
 
-  $ChannelSlotsCopyWith<$Res> get channelSlots;
   $PartnerCopyWith<$Res> get currentPartner;
+  $ChannelSlotsCopyWith<$Res>? get channelSlots;
 }
 
 /// @nodoc
@@ -69,9 +69,9 @@ class _$InitMessagingResultCopyWithImpl<$Res, $Val extends InitMessagingResult>
   $Res call({
     Object? needactionInboxCounter = null,
     Object? starredCounter = null,
-    Object? channelSlots = null,
     Object? currentPartner = null,
     Object? currentUserId = null,
+    Object? channelSlots = freezed,
   }) {
     return _then(_value.copyWith(
       needactionInboxCounter: null == needactionInboxCounter
@@ -82,10 +82,6 @@ class _$InitMessagingResultCopyWithImpl<$Res, $Val extends InitMessagingResult>
           ? _value.starredCounter
           : starredCounter // ignore: cast_nullable_to_non_nullable
               as int,
-      channelSlots: null == channelSlots
-          ? _value.channelSlots
-          : channelSlots // ignore: cast_nullable_to_non_nullable
-              as ChannelSlots,
       currentPartner: null == currentPartner
           ? _value.currentPartner
           : currentPartner // ignore: cast_nullable_to_non_nullable
@@ -94,15 +90,11 @@ class _$InitMessagingResultCopyWithImpl<$Res, $Val extends InitMessagingResult>
           ? _value.currentUserId
           : currentUserId // ignore: cast_nullable_to_non_nullable
               as int,
+      channelSlots: freezed == channelSlots
+          ? _value.channelSlots
+          : channelSlots // ignore: cast_nullable_to_non_nullable
+              as ChannelSlots?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ChannelSlotsCopyWith<$Res> get channelSlots {
-    return $ChannelSlotsCopyWith<$Res>(_value.channelSlots, (value) {
-      return _then(_value.copyWith(channelSlots: value) as $Val);
-    });
   }
 
   @override
@@ -110,6 +102,18 @@ class _$InitMessagingResultCopyWithImpl<$Res, $Val extends InitMessagingResult>
   $PartnerCopyWith<$Res> get currentPartner {
     return $PartnerCopyWith<$Res>(_value.currentPartner, (value) {
       return _then(_value.copyWith(currentPartner: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChannelSlotsCopyWith<$Res>? get channelSlots {
+    if (_value.channelSlots == null) {
+      return null;
+    }
+
+    return $ChannelSlotsCopyWith<$Res>(_value.channelSlots!, (value) {
+      return _then(_value.copyWith(channelSlots: value) as $Val);
     });
   }
 }
@@ -125,14 +129,14 @@ abstract class _$$InitMessagingResultImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'needaction_inbox_counter') int needactionInboxCounter,
       @JsonKey(name: 'starred_counter') int starredCounter,
-      @JsonKey(name: 'channel_slots') ChannelSlots channelSlots,
       @JsonKey(name: 'current_partner') Partner currentPartner,
-      @JsonKey(name: 'current_user_id') int currentUserId});
+      @JsonKey(name: 'current_user_id') int currentUserId,
+      @JsonKey(name: 'channel_slots') ChannelSlots? channelSlots});
 
   @override
-  $ChannelSlotsCopyWith<$Res> get channelSlots;
-  @override
   $PartnerCopyWith<$Res> get currentPartner;
+  @override
+  $ChannelSlotsCopyWith<$Res>? get channelSlots;
 }
 
 /// @nodoc
@@ -148,9 +152,9 @@ class __$$InitMessagingResultImplCopyWithImpl<$Res>
   $Res call({
     Object? needactionInboxCounter = null,
     Object? starredCounter = null,
-    Object? channelSlots = null,
     Object? currentPartner = null,
     Object? currentUserId = null,
+    Object? channelSlots = freezed,
   }) {
     return _then(_$InitMessagingResultImpl(
       needactionInboxCounter: null == needactionInboxCounter
@@ -161,10 +165,6 @@ class __$$InitMessagingResultImplCopyWithImpl<$Res>
           ? _value.starredCounter
           : starredCounter // ignore: cast_nullable_to_non_nullable
               as int,
-      channelSlots: null == channelSlots
-          ? _value.channelSlots
-          : channelSlots // ignore: cast_nullable_to_non_nullable
-              as ChannelSlots,
       currentPartner: null == currentPartner
           ? _value.currentPartner
           : currentPartner // ignore: cast_nullable_to_non_nullable
@@ -173,6 +173,10 @@ class __$$InitMessagingResultImplCopyWithImpl<$Res>
           ? _value.currentUserId
           : currentUserId // ignore: cast_nullable_to_non_nullable
               as int,
+      channelSlots: freezed == channelSlots
+          ? _value.channelSlots
+          : channelSlots // ignore: cast_nullable_to_non_nullable
+              as ChannelSlots?,
     ));
   }
 }
@@ -184,9 +188,9 @@ class _$InitMessagingResultImpl implements _InitMessagingResult {
       {@JsonKey(name: 'needaction_inbox_counter')
       required this.needactionInboxCounter,
       @JsonKey(name: 'starred_counter') required this.starredCounter,
-      @JsonKey(name: 'channel_slots') required this.channelSlots,
       @JsonKey(name: 'current_partner') required this.currentPartner,
-      @JsonKey(name: 'current_user_id') required this.currentUserId});
+      @JsonKey(name: 'current_user_id') required this.currentUserId,
+      @JsonKey(name: 'channel_slots') this.channelSlots});
 
   factory _$InitMessagingResultImpl.fromJson(Map<String, dynamic> json) =>
       _$$InitMessagingResultImplFromJson(json);
@@ -198,18 +202,18 @@ class _$InitMessagingResultImpl implements _InitMessagingResult {
   @JsonKey(name: 'starred_counter')
   final int starredCounter;
   @override
-  @JsonKey(name: 'channel_slots')
-  final ChannelSlots channelSlots;
-  @override
   @JsonKey(name: 'current_partner')
   final Partner currentPartner;
   @override
   @JsonKey(name: 'current_user_id')
   final int currentUserId;
+  @override
+  @JsonKey(name: 'channel_slots')
+  final ChannelSlots? channelSlots;
 
   @override
   String toString() {
-    return 'InitMessagingResult(needactionInboxCounter: $needactionInboxCounter, starredCounter: $starredCounter, channelSlots: $channelSlots, currentPartner: $currentPartner, currentUserId: $currentUserId)';
+    return 'InitMessagingResult(needactionInboxCounter: $needactionInboxCounter, starredCounter: $starredCounter, currentPartner: $currentPartner, currentUserId: $currentUserId, channelSlots: $channelSlots)';
   }
 
   @override
@@ -221,18 +225,18 @@ class _$InitMessagingResultImpl implements _InitMessagingResult {
                 other.needactionInboxCounter == needactionInboxCounter) &&
             (identical(other.starredCounter, starredCounter) ||
                 other.starredCounter == starredCounter) &&
-            (identical(other.channelSlots, channelSlots) ||
-                other.channelSlots == channelSlots) &&
             (identical(other.currentPartner, currentPartner) ||
                 other.currentPartner == currentPartner) &&
             (identical(other.currentUserId, currentUserId) ||
-                other.currentUserId == currentUserId));
+                other.currentUserId == currentUserId) &&
+            (identical(other.channelSlots, channelSlots) ||
+                other.channelSlots == channelSlots));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, needactionInboxCounter,
-      starredCounter, channelSlots, currentPartner, currentUserId);
+      starredCounter, currentPartner, currentUserId, channelSlots);
 
   @JsonKey(ignore: true)
   @override
@@ -254,10 +258,10 @@ abstract class _InitMessagingResult implements InitMessagingResult {
       {@JsonKey(name: 'needaction_inbox_counter')
       required final int needactionInboxCounter,
       @JsonKey(name: 'starred_counter') required final int starredCounter,
-      @JsonKey(name: 'channel_slots') required final ChannelSlots channelSlots,
       @JsonKey(name: 'current_partner') required final Partner currentPartner,
-      @JsonKey(name: 'current_user_id')
-      required final int currentUserId}) = _$InitMessagingResultImpl;
+      @JsonKey(name: 'current_user_id') required final int currentUserId,
+      @JsonKey(name: 'channel_slots')
+      final ChannelSlots? channelSlots}) = _$InitMessagingResultImpl;
 
   factory _InitMessagingResult.fromJson(Map<String, dynamic> json) =
       _$InitMessagingResultImpl.fromJson;
@@ -269,14 +273,14 @@ abstract class _InitMessagingResult implements InitMessagingResult {
   @JsonKey(name: 'starred_counter')
   int get starredCounter;
   @override
-  @JsonKey(name: 'channel_slots')
-  ChannelSlots get channelSlots;
-  @override
   @JsonKey(name: 'current_partner')
   Partner get currentPartner;
   @override
   @JsonKey(name: 'current_user_id')
   int get currentUserId;
+  @override
+  @JsonKey(name: 'channel_slots')
+  ChannelSlots? get channelSlots;
   @override
   @JsonKey(ignore: true)
   _$$InitMessagingResultImplCopyWith<_$InitMessagingResultImpl> get copyWith =>

@@ -25,17 +25,22 @@ Future<void> main(List<String> args) async {
   print(messagingResult.currentPartner);
 
   print('Channels: ');
-  print(messagingResult.channelSlots.channels);
+  print(messagingResult.channelSlots?.channels);
 
   print('Direct messages: ');
-  print(messagingResult.channelSlots.directMessages);
+  print(messagingResult.channelSlots?.directMessages);
 
   print('Private groups: ');
-  print(messagingResult.channelSlots.privateGroups);
+  print(messagingResult.channelSlots?.privateGroups);
+
+  if (messagingResult.channelSlots?.channels.isEmpty ?? true) {
+    print('No channels found');
+    return;
+  }
 
   // Fetch messages
   final messages = await odooChat.fetchMessages(
-    messagingResult.channelSlots.channels.first.id,
+    messagingResult.channelSlots!.channels.first.id,
   );
 
   print('Messages: ');
@@ -49,7 +54,7 @@ Future<void> main(List<String> args) async {
 
   // Send message
   final newMessageId = await odooChat.sendMessage(
-    channelId: messagingResult.channelSlots.channels.first.id,
+    channelId: messagingResult.channelSlots!.channels.first.id,
     message: 'Test message from OdooChat Flutter',
   );
 
@@ -85,6 +90,8 @@ Future<void> main(List<String> args) async {
               ):
               print('Transient message: $body');
           }
+        case null:
+          print('Empty poll result');
       }
     }
   }

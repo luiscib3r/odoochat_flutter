@@ -21,9 +21,9 @@ PollResult _$PollResultFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PollResult {
   int get id => throw _privateConstructorUsedError;
-  List<dynamic> get channel => throw _privateConstructorUsedError;
+  List<dynamic>? get channel => throw _privateConstructorUsedError;
   @JsonKey(fromJson: PollMessage.fromResult)
-  PollMessage<dynamic> get message => throw _privateConstructorUsedError;
+  PollMessage<dynamic>? get message => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,8 +39,9 @@ abstract class $PollResultCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      List<dynamic> channel,
-      @JsonKey(fromJson: PollMessage.fromResult) PollMessage<dynamic> message});
+      List<dynamic>? channel,
+      @JsonKey(fromJson: PollMessage.fromResult)
+      PollMessage<dynamic>? message});
 }
 
 /// @nodoc
@@ -57,22 +58,22 @@ class _$PollResultCopyWithImpl<$Res, $Val extends PollResult>
   @override
   $Res call({
     Object? id = null,
-    Object? channel = null,
-    Object? message = null,
+    Object? channel = freezed,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      channel: null == channel
+      channel: freezed == channel
           ? _value.channel
           : channel // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      message: null == message
+              as List<dynamic>?,
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as PollMessage<dynamic>,
+              as PollMessage<dynamic>?,
     ) as $Val);
   }
 }
@@ -87,8 +88,9 @@ abstract class _$$PollResultImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      List<dynamic> channel,
-      @JsonKey(fromJson: PollMessage.fromResult) PollMessage<dynamic> message});
+      List<dynamic>? channel,
+      @JsonKey(fromJson: PollMessage.fromResult)
+      PollMessage<dynamic>? message});
 }
 
 /// @nodoc
@@ -103,22 +105,22 @@ class __$$PollResultImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? channel = null,
-    Object? message = null,
+    Object? channel = freezed,
+    Object? message = freezed,
   }) {
     return _then(_$PollResultImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      channel: null == channel
+      channel: freezed == channel
           ? _value._channel
           : channel // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
-      message: null == message
+              as List<dynamic>?,
+      message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
-              as PollMessage<dynamic>,
+              as PollMessage<dynamic>?,
     ));
   }
 }
@@ -128,8 +130,8 @@ class __$$PollResultImplCopyWithImpl<$Res>
 class _$PollResultImpl implements _PollResult {
   const _$PollResultImpl(
       {required this.id,
-      required final List<dynamic> channel,
-      @JsonKey(fromJson: PollMessage.fromResult) required this.message})
+      final List<dynamic>? channel,
+      @JsonKey(fromJson: PollMessage.fromResult) this.message})
       : _channel = channel;
 
   factory _$PollResultImpl.fromJson(Map<String, dynamic> json) =>
@@ -137,17 +139,19 @@ class _$PollResultImpl implements _PollResult {
 
   @override
   final int id;
-  final List<dynamic> _channel;
+  final List<dynamic>? _channel;
   @override
-  List<dynamic> get channel {
+  List<dynamic>? get channel {
+    final value = _channel;
+    if (value == null) return null;
     if (_channel is EqualUnmodifiableListView) return _channel;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_channel);
+    return EqualUnmodifiableListView(value);
   }
 
   @override
   @JsonKey(fromJson: PollMessage.fromResult)
-  final PollMessage<dynamic> message;
+  final PollMessage<dynamic>? message;
 
   @override
   String toString() {
@@ -186,9 +190,9 @@ class _$PollResultImpl implements _PollResult {
 abstract class _PollResult implements PollResult {
   const factory _PollResult(
       {required final int id,
-      required final List<dynamic> channel,
+      final List<dynamic>? channel,
       @JsonKey(fromJson: PollMessage.fromResult)
-      required final PollMessage<dynamic> message}) = _$PollResultImpl;
+      final PollMessage<dynamic>? message}) = _$PollResultImpl;
 
   factory _PollResult.fromJson(Map<String, dynamic> json) =
       _$PollResultImpl.fromJson;
@@ -196,10 +200,10 @@ abstract class _PollResult implements PollResult {
   @override
   int get id;
   @override
-  List<dynamic> get channel;
+  List<dynamic>? get channel;
   @override
   @JsonKey(fromJson: PollMessage.fromResult)
-  PollMessage<dynamic> get message;
+  PollMessage<dynamic>? get message;
   @override
   @JsonKey(ignore: true)
   _$$PollResultImplCopyWith<_$PollResultImpl> get copyWith =>
