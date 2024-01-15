@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:odoochat/odoochat.dart';
@@ -14,7 +15,7 @@ class App extends StatelessWidget {
       create: (context) => OdooChat(
         serverUrl: 'http://localhost:8069',
         databaseName: 'luisciber',
-        debug: true,
+        debug: kDebugMode,
       ),
       child: MaterialApp(
         theme: ThemeData(

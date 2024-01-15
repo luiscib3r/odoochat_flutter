@@ -17,7 +17,7 @@ Future<void> main(List<String> args) async {
 
   // Login
   final loginResult = await odooChat.login(
-    username: 'luisciber640@gmail.com',
+    username: 'youruser@odoo.com',
     password: '12345678',
   );
 

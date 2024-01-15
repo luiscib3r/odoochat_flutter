@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$OdooChatState {
+  bool get loading => throw _privateConstructorUsedError;
   List<Message> get messages => throw _privateConstructorUsedError;
   List<AppChannel> get channels => throw _privateConstructorUsedError;
   AppChannel? get currentChannel => throw _privateConstructorUsedError;
@@ -33,7 +34,8 @@ abstract class $OdooChatStateCopyWith<$Res> {
       _$OdooChatStateCopyWithImpl<$Res, OdooChatState>;
   @useResult
   $Res call(
-      {List<Message> messages,
+      {bool loading,
+      List<Message> messages,
       List<AppChannel> channels,
       AppChannel? currentChannel,
       User? user});
@@ -52,12 +54,17 @@ class _$OdooChatStateCopyWithImpl<$Res, $Val extends OdooChatState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? loading = null,
     Object? messages = null,
     Object? channels = null,
     Object? currentChannel = freezed,
     Object? user = freezed,
   }) {
     return _then(_value.copyWith(
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
       messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -87,7 +94,8 @@ abstract class _$$OdooChatStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Message> messages,
+      {bool loading,
+      List<Message> messages,
       List<AppChannel> channels,
       AppChannel? currentChannel,
       User? user});
@@ -104,12 +112,17 @@ class __$$OdooChatStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? loading = null,
     Object? messages = null,
     Object? channels = null,
     Object? currentChannel = freezed,
     Object? user = freezed,
   }) {
     return _then(_$OdooChatStateImpl(
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
       messages: null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -134,13 +147,16 @@ class __$$OdooChatStateImplCopyWithImpl<$Res>
 
 class _$OdooChatStateImpl implements _OdooChatState {
   const _$OdooChatStateImpl(
-      {required final List<Message> messages,
+      {required this.loading,
+      required final List<Message> messages,
       required final List<AppChannel> channels,
       this.currentChannel,
       this.user})
       : _messages = messages,
         _channels = channels;
 
+  @override
+  final bool loading;
   final List<Message> _messages;
   @override
   List<Message> get messages {
@@ -164,7 +180,7 @@ class _$OdooChatStateImpl implements _OdooChatState {
 
   @override
   String toString() {
-    return 'OdooChatState(messages: $messages, channels: $channels, currentChannel: $currentChannel, user: $user)';
+    return 'OdooChatState(loading: $loading, messages: $messages, channels: $channels, currentChannel: $currentChannel, user: $user)';
   }
 
   @override
@@ -172,6 +188,7 @@ class _$OdooChatStateImpl implements _OdooChatState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$OdooChatStateImpl &&
+            (identical(other.loading, loading) || other.loading == loading) &&
             const DeepCollectionEquality().equals(other._messages, _messages) &&
             const DeepCollectionEquality().equals(other._channels, _channels) &&
             (identical(other.currentChannel, currentChannel) ||
@@ -182,6 +199,7 @@ class _$OdooChatStateImpl implements _OdooChatState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      loading,
       const DeepCollectionEquality().hash(_messages),
       const DeepCollectionEquality().hash(_channels),
       currentChannel,
@@ -196,11 +214,14 @@ class _$OdooChatStateImpl implements _OdooChatState {
 
 abstract class _OdooChatState implements OdooChatState {
   const factory _OdooChatState(
-      {required final List<Message> messages,
+      {required final bool loading,
+      required final List<Message> messages,
       required final List<AppChannel> channels,
       final AppChannel? currentChannel,
       final User? user}) = _$OdooChatStateImpl;
 
+  @override
+  bool get loading;
   @override
   List<Message> get messages;
   @override

@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -218,6 +219,24 @@ class ChatBloc extends Cubit<OdooChatState> {
         message: message.text,
       );
     }
+  }
+
+  Future<void> sendAttachment({
+    required String filename,
+    required Uint8List bytes,
+  }) async {
+    emit(state.copyWith(loading: true));
+    final attachmentId = await odooChat.uploadAttachment(
+      filename: filename,
+      bytes: bytes,
+    );
+    emit(state.copyWith(loading: false));
+
+    await odooChat.sendMessage(
+      channelId: state.currentChannel!.id,
+      message: '',
+      attachmentIds: [attachmentId],
+    );
   }
 
   @override

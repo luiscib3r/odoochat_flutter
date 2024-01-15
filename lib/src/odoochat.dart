@@ -5,9 +5,9 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:odoochat/odoochat.dart';
+import 'package:odoochat/src/debug/odoo_dio_logger.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 export 'api/odoochat_api.dart';
 export 'exceptions/exceptions.dart';
@@ -31,12 +31,7 @@ class OdooChat {
           CookieManager(
             CookieJar(),
           ),
-          if (debug)
-            PrettyDioLogger(
-              requestHeader: true,
-              requestBody: true,
-              responseHeader: true,
-            ),
+          if (debug) OdooDioLogger(),
         ],
       );
 
@@ -198,6 +193,33 @@ class OdooChat {
     return Uint8List.fromList(response.data!);
   }
 
+  String? _csrfToken;
+
+  Future<String> get csrfToken async {
+    if (_csrfToken != null) {
+      return _csrfToken!;
+    }
+
+    final response = await _dio.get<String>(
+      '/web',
+      options: Options(
+        contentType: ContentType.html.value,
+      ),
+    );
+
+    final document = response.data!;
+
+    final csrfToken = document
+        .split('csrf_token:')
+        .last
+        .split(',')
+        .first
+        .replaceAll('"', '')
+        .replaceAll(' ', '');
+
+    return _csrfToken = csrfToken;
+  }
+
   Future<File> downloadAttachment(Attachment attachment) async {
     final directory = await getTemporaryDirectory();
     final savePath = join(directory.path, attachment.filename);
@@ -207,5 +229,26 @@ class OdooChat {
     await file.writeAsBytes(data);
 
     return File(savePath);
+  }
+
+  Future<int> uploadAttachment({
+    required String filename,
+    required Uint8List bytes,
+  }) async {
+    final token = await csrfToken;
+
+    final response = await _dio.post<String>(
+      '/web/binary/upload_attachment',
+      data: UploadAttachmentPayload(
+        file: bytes,
+        fileName: filename,
+        token: token,
+      ).payload,
+    );
+
+    final attachmentId =
+        response.data!.split('"id"').last.split(',').first.replaceAll(': ', '');
+
+    return int.parse(attachmentId);
   }
 }

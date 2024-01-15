@@ -3,6 +3,7 @@ part of 'chat_bloc.dart';
 @freezed
 class OdooChatState with _$OdooChatState {
   const factory OdooChatState({
+    required bool loading,
     required List<Message> messages,
     required List<AppChannel> channels,
     AppChannel? currentChannel,
@@ -10,6 +11,7 @@ class OdooChatState with _$OdooChatState {
   }) = _OdooChatState;
 
   factory OdooChatState.initial() => const OdooChatState(
+        loading: false,
         messages: [],
         channels: [],
       );
