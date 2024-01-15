@@ -1,9 +1,20 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
-import 'package:odoochat/odoochat.dart' show OdooChat;
+import 'package:odoochat/odoochat.dart'
+    show
+        OdooChat,
+        PollMessageChannel,
+        PollMessageInfo,
+        PollMessageMessage,
+        PollResult;
+
+// ignore: always_use_package_imports
+import 'chat_poll/chat_poll.dart';
 
 part 'chat_bloc.freezed.dart';
 part 'chat_state.dart';
@@ -16,6 +27,12 @@ class ChatBloc extends Cubit<OdooChatState> {
   }
 
   final OdooChat odooChat;
+
+  late final ChatPoll chatPoll = ChatPoll(
+    odooChat: odooChat,
+  );
+
+  late final StreamSubscription<List<PollResult>> _pollSubscription;
 
   Future<void> _loadData() async {
     final loginResult = odooChat.loginResult!;
@@ -35,6 +52,42 @@ class ChatBloc extends Cubit<OdooChatState> {
           id: loginResult.partnerId.toString(),
           firstName: loginResult.partnerDisplayName.split(',').last,
         ),
+      ),
+    );
+
+    await chatPoll.run();
+    _pollSubscription = chatPoll.stream.listen(_handlePollResults);
+  }
+
+  void _handlePollResults(List<PollResult> results) {
+    final newMessages = results
+        .where((e) => (e.channel.last as int) == state.currentChannel?.id)
+        .map(
+          (e) => switch (e.message) {
+            final PollMessageMessage message => TextMessage(
+                author: User(
+                  firstName: message.data.author.name,
+                  id: message.data.author.id.toString(),
+                ),
+                id: message.data.id.toString(),
+                text: Bidi.stripHtmlIfNeeded(message.data.body).trim(),
+                createdAt:
+                    DateTime.parse(message.data.date).millisecondsSinceEpoch,
+              ),
+            final PollMessageChannel _ => null,
+            final PollMessageInfo _ => null,
+          },
+        )
+        .where((e) => e != null)
+        .where((e) => !state.messages.contains(e))
+        .cast<TextMessage>();
+
+    emit(
+      state.copyWith(
+        messages: [
+          ...newMessages,
+          ...state.messages,
+        ],
       ),
     );
   }
@@ -90,5 +143,11 @@ class ChatBloc extends Cubit<OdooChatState> {
         message: message.text,
       );
     }
+  }
+
+  @override
+  Future<void> close() async {
+    await _pollSubscription.cancel();
+    return super.close();
   }
 }

@@ -68,7 +68,7 @@ class ChatView extends StatelessWidget {
                   ),
                   child: ListTile(
                     title: Text(
-                      channel.name,
+                      '${channel.id} ${channel.name}',
                       style: const TextStyle(fontSize: 16),
                     ),
                     onTap: () => bloc.setChannel(channel),

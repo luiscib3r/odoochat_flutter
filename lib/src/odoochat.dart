@@ -159,7 +159,9 @@ class OdooChat {
             ),
           );
 
-          _lastPoll = response.result?.last.id ?? _lastPoll;
+          if (response.result?.isNotEmpty ?? false) {
+            _lastPoll = response.result?.last.id ?? _lastPoll;
+          }
 
           return response;
         },
