@@ -111,3 +111,6 @@ It is recommended to use isolates to run the chat poll.
 
 Review an [application example](https://github.com/luiscib3r/odoochat_flutter/tree/main/example/odoochat_example).
 
+### Flutter Web
+
+Please note that currently, this package does not support Flutter Web. However, work is in progress to make it compatible with web as well.

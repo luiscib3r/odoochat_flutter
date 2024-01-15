@@ -13,6 +13,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider<OdooChat>(
       create: (context) => OdooChat(
+        // For Android Emulator
+        // serverUrl: 'http://10.0.2.2:8069',
+        // For iOS Emulator
         serverUrl: 'http://localhost:8069',
         databaseName: 'luisciber',
         debug: kDebugMode,
