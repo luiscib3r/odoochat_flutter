@@ -8,12 +8,7 @@ import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:odoochat/odoochat.dart'
-    show
-        OdooChat,
-        PollMessageChannel,
-        PollMessageInfo,
-        PollMessageMessage,
-        PollResult;
+    show OdooChat, PollMessageMessage, PollResult;
 
 // ignore: always_use_package_imports
 import 'chat_poll/chat_poll.dart';
@@ -61,33 +56,72 @@ class ChatBloc extends Cubit<OdooChatState> {
     _pollSubscription = chatPoll.stream.listen(_handlePollResults);
   }
 
-  void _handlePollResults(List<PollResult> results) {
-    final newMessages = results
+  Future<void> _handlePollResults(List<PollResult> results) async {
+    final newMessagesFuture = results
         .where((e) => (e.channel.last as int) == state.currentChannel?.id)
-        .map(
-          (e) => switch (e.message) {
-            final PollMessageMessage message => TextMessage(
-                author: User(
-                  firstName: message.data.author.name,
-                  id: message.data.author.id.toString(),
-                ),
-                id: message.data.id.toString(),
-                text: Bidi.stripHtmlIfNeeded(message.data.body).trim(),
-                createdAt:
-                    DateTime.parse(message.data.date).millisecondsSinceEpoch,
-              ),
-            final PollMessageChannel _ => null,
-            final PollMessageInfo _ => null,
-          },
-        )
+        .map((e) async {
+      if (e.message is PollMessageMessage) {
+        final message = (e.message as PollMessageMessage).data;
+
+        final author = User(
+          firstName: message.author.name,
+          id: message.author.id.toString(),
+        );
+
+        final attachments = await Future.wait(
+          message.atachments.map(
+            (attach) async {
+              final saveFile = await odooChat.downloadAttachment(attach);
+
+              if (attach.mimetype == 'image/jpeg' ||
+                  attach.mimetype == 'image/png') {
+                return ImageMessage(
+                  author: author,
+                  id: 'attach-${attach.id}',
+                  name: attach.filename,
+                  size: saveFile.lengthSync(),
+                  uri: saveFile.path,
+                );
+              }
+
+              return FileMessage(
+                author: author,
+                id: 'attach-${attach.id}',
+                name: attach.filename,
+                size: saveFile.lengthSync(),
+                uri: saveFile.path,
+              );
+            },
+          ),
+        );
+
+        return [
+          if (message.body.isNotEmpty)
+            TextMessage(
+              author: author,
+              id: message.id.toString(),
+              text: Bidi.stripHtmlIfNeeded(message.body).trim(),
+              createdAt: DateTime.parse(message.date).millisecondsSinceEpoch,
+            ),
+          ...attachments,
+        ];
+      }
+
+      return null;
+    });
+
+    final newMessages = await Future.wait(newMessagesFuture);
+
+    final newMessagesFiltered = newMessages
         .where((e) => e != null)
-        .where((e) => !state.messages.contains(e))
-        .cast<TextMessage>();
+        .cast<List<Message>>()
+        .expand((e) => e)
+        .where((e) => !state.messages.contains(e));
 
     emit(
       state.copyWith(
         messages: [
-          ...newMessages,
+          ...newMessagesFiltered,
           ...state.messages,
         ],
       ),
@@ -133,12 +167,13 @@ class ChatBloc extends Cubit<OdooChatState> {
         );
 
         return [
-          TextMessage(
-            id: e.id.toString(),
-            author: author,
-            text: Bidi.stripHtmlIfNeeded(e.body).trim(),
-            createdAt: DateTime.parse(e.date).millisecondsSinceEpoch,
-          ),
+          if (e.body.isNotEmpty)
+            TextMessage(
+              id: e.id.toString(),
+              author: author,
+              text: Bidi.stripHtmlIfNeeded(e.body).trim(),
+              createdAt: DateTime.parse(e.date).millisecondsSinceEpoch,
+            ),
           ...attachments,
         ];
       }),

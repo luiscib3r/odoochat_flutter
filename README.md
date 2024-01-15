@@ -1,61 +1,113 @@
 ## OdooChat.
 
+### Example
+
 ```dart
-import 'dart:math';
+// ignore_for_file: avoid_print
 
-import 'package:odoochat/src/odoochat.dart';
+import 'package:odoochat/odoochat.dart';
 
-void main(List<String> args) async {
+Future<void> main(List<String> args) async {
+  // Init
   final odooChat = OdooChat(
-    serverUrl: 'https://your-server.odoo.com',
-    username: 'user',
-    password: 'pass',
-    databaseName: 'databasename',
+    serverUrl: 'http://localhost:8069',
+    databaseName: 'luisciber',
+    debug: true,
   );
 
-  await odooChat.login();
-  final channels = await odooChat.initMessaging();
+  // Login
+  final loginResult = await odooChat.login(
+    username: 'luisciber640@gmail.com',
+    password: '12345678',
+  );
 
-  // Find channel with admin
-  late int admin_channel;
+  print(loginResult);
 
-  channels.forEach((element) {
-    if (element.name.contains('admin')) admin_channel = element.id;
-  });
+  // Init messaging
+  final messagingResult = await odooChat.initMessaging();
 
-  // Get messages
-  final messages = await odooChat.messageFetch(admin_channel);
+  print('Current Partner: ');
+  print(messagingResult.currentPartner);
 
-  messages.forEach((element) {
-    print(element.author.name);
-    print(element.body);
-    print(element.attachments);
+  print('Channels: ');
+  print(messagingResult.channelSlots.channels);
+
+  print('Direct messages: ');
+  print(messagingResult.channelSlots.directMessages);
+
+  print('Private groups: ');
+  print(messagingResult.channelSlots.privateGroups);
+
+  // Fetch messages
+  final messages = await odooChat.fetchMessages(
+    messagingResult.channelSlots.channels.first.id,
+  );
+
+  print('Messages: ');
+  for (final message in messages.reversed) {
+    print(message.emailFrom);
+    print(message.author);
+    print(message.body);
+    print(message.date);
     print('\n');
-  });
+  }
 
   // Send message
-  await odooChat.messagePost(
-    channel_id: admin_channel,
-    body:
-        'Probando desde OdooChat Flutter mensage: ${Random().nextInt(999999)}',
+  final newMessageId = await odooChat.sendMessage(
+    channelId: messagingResult.channelSlots.channels.first.id,
+    message: 'Test message from OdooChat Flutter',
   );
 
-  // Poll
-  while (true) {
-    final message = await odooChat.poll();
+  print('New message id: $newMessageId');
 
-    if (message != null) {
-      print(message.author.name);
-      print(message.author.uid);
-      print(message.channelId);
-      print(message.body);
-      print(message.attachments);
+  // Poll
+  while (await Future<bool>.delayed(const Duration(seconds: 3), () => true)) {
+    final results = await odooChat.poll();
+
+    for (final result in results) {
+      print('\n');
+      switch (result.message) {
+        case PollMessageMessage(data: final Message data):
+          print('Is a message');
+          print(data);
+        case PollMessageChannel(data: final Channel data):
+          print('Is a new channel notification');
+          print(data);
+        case PollMessageInfo(data: final MessageInfo data):
+          print('Is an info message'); // ex: typing, or bot messages
+          switch (data) {
+            case MessageInfoTyping(
+                isTyping: final bool isTyping,
+                partnerId: final int partnerId,
+                partnerName: final String partnerName,
+              ):
+              print('Partner id: $partnerId');
+              print('Partner name: $partnerName');
+              print('Is typing: $isTyping');
+
+            case MessageInfoTransient(
+                body: final String body,
+              ):
+              print('Transient message: $body');
+          }
+      }
     }
   }
 }
 ```
+### Download attachments
 
+```dart
+// Get attachment in bytes
+final bytes = odooChat.getAttachment(attachmentId)
 
-### Odoo 14 NOTE
+// Download attachment and get File
+final file = odooChat.downloadAttachment(attachmentId)
+```
 
-For Odoo 14 remove the `subtype` field in `MessagePostPayload`
+### Note
+
+It is recommended to use isolates to run the chat poll.
+
+Review an [application example](https://github.com/luiscib3r/odoochat_flutter/tree/main/example/odoochat_example).
+
