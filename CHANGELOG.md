@@ -1,3 +1,7 @@
+## 2.1.1
+
+ - **FIX**: fix some nullable fields.
+
 ## 2.1.0
 
  - **FEAT**: compatible with odoo 15.
