@@ -1,3 +1,7 @@
+## 2.1.0
+
+ - **FEAT**: compatible with odoo 15.
+
 ## 2.0.0
 
 - Major refactor of the entire package after 3 years
