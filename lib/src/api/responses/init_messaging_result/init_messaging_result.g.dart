@@ -18,6 +18,9 @@ _$InitMessagingResultImpl _$$InitMessagingResultImplFromJson(
           ? null
           : ChannelSlots.fromJson(
               json['channel_slots'] as Map<String, dynamic>),
+      channels_: (json['channels'] as List<dynamic>?)
+          ?.map((e) => Channel.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$InitMessagingResultImplToJson(
@@ -28,6 +31,7 @@ Map<String, dynamic> _$$InitMessagingResultImplToJson(
       'current_partner': instance.currentPartner.toJson(),
       'current_user_id': instance.currentUserId,
       'channel_slots': instance.channelSlots?.toJson(),
+      'channels': instance.channels_?.map((e) => e.toJson()).toList(),
     };
 
 _$ChannelSlotsImpl _$$ChannelSlotsImplFromJson(Map<String, dynamic> json) =>

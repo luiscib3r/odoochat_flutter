@@ -6,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:odoochat/odoochat.dart';
 import 'package:odoochat/src/debug/odoo_dio_logger.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 export 'api/odoochat_api.dart';
 export 'exceptions/exceptions.dart';
@@ -48,6 +46,7 @@ class OdooChat {
 
   LoginResult? get loginResult => _loginResult;
   LoginResult? _loginResult;
+  int? _odooVersion;
 
   Future<LoginResult> login({
     required String username,
@@ -76,6 +75,7 @@ class OdooChat {
     }
 
     _loginResult = response.result;
+    _odooVersion = _loginResult?.serverVersionInfo.first as int?;
 
     return response.result!;
   }
@@ -117,14 +117,27 @@ class OdooChat {
       );
 
   Future<List<Message>> fetchMessages(int channelId) => _proccess(
-        action: () => _api.messageFetch(
-          RpcPayload.from(
-            params: MessageFetchParams(
-              context: _loginResult!.userContext,
-              channelId: channelId,
+        action: () {
+          if (_odooVersion == 14) {
+            return _api.messageFetch(
+              RpcPayload.from(
+                params: MessageFetchParams(
+                  context: _loginResult!.userContext,
+                  channelId: channelId,
+                ),
+              ),
+            );
+          }
+
+          return _api.getMessages(
+            RpcPayload.from(
+              params: GetMessagesParams(
+                channelId: channelId,
+                limit: 30,
+              ),
             ),
-          ),
-        ),
+          );
+        },
       );
 
   Future<int> sendMessage({
@@ -133,16 +146,37 @@ class OdooChat {
     List<int> attachmentIds = const [],
   }) =>
       _proccess(
-        action: () => _api.messagePost(
-          RpcPayload.from(
-            params: MessagePostParams(
-              context: _loginResult!.userContext,
-              channelId: channelId,
-              body: message,
-              attachmentIds: attachmentIds,
+        action: () async {
+          if (_odooVersion == 14) {
+            return _api.messagePost(
+              RpcPayload.from(
+                params: MessagePostParams(
+                  context: _loginResult!.userContext,
+                  channelId: channelId,
+                  body: message,
+                  attachmentIds: attachmentIds,
+                ),
+              ),
+            );
+          }
+
+          final response = await _api.sendMessage(
+            RpcPayload.from(
+              params: SendMessageParams(
+                channelId: channelId,
+                body: message,
+                context: _loginResult!.userContext,
+                attachmentIds: attachmentIds,
+              ),
             ),
-          ),
-        ),
+          );
+
+          return RpcResponse<int>(
+            jsonrpc: response.jsonrpc,
+            id: response.id,
+            result: response.result?.id,
+          );
+        },
       );
 
   int _lastPoll = 0;
@@ -218,17 +252,6 @@ class OdooChat {
         .replaceAll(' ', '');
 
     return _csrfToken = csrfToken;
-  }
-
-  Future<File> downloadAttachment(Attachment attachment) async {
-    final directory = await getTemporaryDirectory();
-    final savePath = join(directory.path, attachment.filename);
-    final data = await getAttachment(attachment.id);
-
-    final file = File(savePath);
-    await file.writeAsBytes(data);
-
-    return File(savePath);
   }
 
   Future<int> uploadAttachment({

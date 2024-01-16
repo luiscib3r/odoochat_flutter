@@ -29,11 +29,6 @@ mixin _$Channel {
   @JsonKey(name: 'channel_type')
   String get channelType => throw _privateConstructorUsedError;
   String get public => throw _privateConstructorUsedError;
-  @JsonKey(name: 'mass_mailing')
-  bool get massMailing => throw _privateConstructorUsedError;
-  bool get moderation => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_moderator')
-  bool get isModerator => throw _privateConstructorUsedError;
   @JsonKey(name: 'group_based_subscription')
   bool get groupBasedSubscription => throw _privateConstructorUsedError;
   @JsonKey(name: 'create_uid')
@@ -42,8 +37,6 @@ mixin _$Channel {
   int get messageNeedactionCounter => throw _privateConstructorUsedError;
   @JsonKey(name: 'message_unread_counter')
   int get messageUnreadCounter => throw _privateConstructorUsedError;
-  @JsonKey(name: 'custom_channel_name')
-  bool get customChannelName => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_pinned')
   bool get isPinned => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_message_id', fromJson: Channel.parseIntNullable)
@@ -69,14 +62,10 @@ abstract class $ChannelCopyWith<$Res> {
       @JsonKey(name: 'is_minimized') bool isMinimized,
       @JsonKey(name: 'channel_type') String channelType,
       String public,
-      @JsonKey(name: 'mass_mailing') bool massMailing,
-      bool moderation,
-      @JsonKey(name: 'is_moderator') bool isModerator,
       @JsonKey(name: 'group_based_subscription') bool groupBasedSubscription,
       @JsonKey(name: 'create_uid') int createUid,
       @JsonKey(name: 'message_needaction_counter') int messageNeedactionCounter,
       @JsonKey(name: 'message_unread_counter') int messageUnreadCounter,
-      @JsonKey(name: 'custom_channel_name') bool customChannelName,
       @JsonKey(name: 'is_pinned') bool isPinned,
       @JsonKey(name: 'last_message_id', fromJson: Channel.parseIntNullable)
       int? lastMessageId,
@@ -104,14 +93,10 @@ class _$ChannelCopyWithImpl<$Res, $Val extends Channel>
     Object? isMinimized = null,
     Object? channelType = null,
     Object? public = null,
-    Object? massMailing = null,
-    Object? moderation = null,
-    Object? isModerator = null,
     Object? groupBasedSubscription = null,
     Object? createUid = null,
     Object? messageNeedactionCounter = null,
     Object? messageUnreadCounter = null,
-    Object? customChannelName = null,
     Object? isPinned = null,
     Object? lastMessageId = freezed,
     Object? seenMessageId = freezed,
@@ -145,18 +130,6 @@ class _$ChannelCopyWithImpl<$Res, $Val extends Channel>
           ? _value.public
           : public // ignore: cast_nullable_to_non_nullable
               as String,
-      massMailing: null == massMailing
-          ? _value.massMailing
-          : massMailing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      moderation: null == moderation
-          ? _value.moderation
-          : moderation // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isModerator: null == isModerator
-          ? _value.isModerator
-          : isModerator // ignore: cast_nullable_to_non_nullable
-              as bool,
       groupBasedSubscription: null == groupBasedSubscription
           ? _value.groupBasedSubscription
           : groupBasedSubscription // ignore: cast_nullable_to_non_nullable
@@ -173,10 +146,6 @@ class _$ChannelCopyWithImpl<$Res, $Val extends Channel>
           ? _value.messageUnreadCounter
           : messageUnreadCounter // ignore: cast_nullable_to_non_nullable
               as int,
-      customChannelName: null == customChannelName
-          ? _value.customChannelName
-          : customChannelName // ignore: cast_nullable_to_non_nullable
-              as bool,
       isPinned: null == isPinned
           ? _value.isPinned
           : isPinned // ignore: cast_nullable_to_non_nullable
@@ -208,14 +177,10 @@ abstract class _$$ChannelImplCopyWith<$Res> implements $ChannelCopyWith<$Res> {
       @JsonKey(name: 'is_minimized') bool isMinimized,
       @JsonKey(name: 'channel_type') String channelType,
       String public,
-      @JsonKey(name: 'mass_mailing') bool massMailing,
-      bool moderation,
-      @JsonKey(name: 'is_moderator') bool isModerator,
       @JsonKey(name: 'group_based_subscription') bool groupBasedSubscription,
       @JsonKey(name: 'create_uid') int createUid,
       @JsonKey(name: 'message_needaction_counter') int messageNeedactionCounter,
       @JsonKey(name: 'message_unread_counter') int messageUnreadCounter,
-      @JsonKey(name: 'custom_channel_name') bool customChannelName,
       @JsonKey(name: 'is_pinned') bool isPinned,
       @JsonKey(name: 'last_message_id', fromJson: Channel.parseIntNullable)
       int? lastMessageId,
@@ -241,14 +206,10 @@ class __$$ChannelImplCopyWithImpl<$Res>
     Object? isMinimized = null,
     Object? channelType = null,
     Object? public = null,
-    Object? massMailing = null,
-    Object? moderation = null,
-    Object? isModerator = null,
     Object? groupBasedSubscription = null,
     Object? createUid = null,
     Object? messageNeedactionCounter = null,
     Object? messageUnreadCounter = null,
-    Object? customChannelName = null,
     Object? isPinned = null,
     Object? lastMessageId = freezed,
     Object? seenMessageId = freezed,
@@ -282,18 +243,6 @@ class __$$ChannelImplCopyWithImpl<$Res>
           ? _value.public
           : public // ignore: cast_nullable_to_non_nullable
               as String,
-      massMailing: null == massMailing
-          ? _value.massMailing
-          : massMailing // ignore: cast_nullable_to_non_nullable
-              as bool,
-      moderation: null == moderation
-          ? _value.moderation
-          : moderation // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isModerator: null == isModerator
-          ? _value.isModerator
-          : isModerator // ignore: cast_nullable_to_non_nullable
-              as bool,
       groupBasedSubscription: null == groupBasedSubscription
           ? _value.groupBasedSubscription
           : groupBasedSubscription // ignore: cast_nullable_to_non_nullable
@@ -310,10 +259,6 @@ class __$$ChannelImplCopyWithImpl<$Res>
           ? _value.messageUnreadCounter
           : messageUnreadCounter // ignore: cast_nullable_to_non_nullable
               as int,
-      customChannelName: null == customChannelName
-          ? _value.customChannelName
-          : customChannelName // ignore: cast_nullable_to_non_nullable
-              as bool,
       isPinned: null == isPinned
           ? _value.isPinned
           : isPinned // ignore: cast_nullable_to_non_nullable
@@ -341,9 +286,6 @@ class _$ChannelImpl implements _Channel {
       @JsonKey(name: 'is_minimized') required this.isMinimized,
       @JsonKey(name: 'channel_type') required this.channelType,
       required this.public,
-      @JsonKey(name: 'mass_mailing') required this.massMailing,
-      required this.moderation,
-      @JsonKey(name: 'is_moderator') required this.isModerator,
       @JsonKey(name: 'group_based_subscription')
       required this.groupBasedSubscription,
       @JsonKey(name: 'create_uid') required this.createUid,
@@ -351,7 +293,6 @@ class _$ChannelImpl implements _Channel {
       required this.messageNeedactionCounter,
       @JsonKey(name: 'message_unread_counter')
       required this.messageUnreadCounter,
-      @JsonKey(name: 'custom_channel_name') required this.customChannelName,
       @JsonKey(name: 'is_pinned') required this.isPinned,
       @JsonKey(name: 'last_message_id', fromJson: Channel.parseIntNullable)
       this.lastMessageId,
@@ -378,14 +319,6 @@ class _$ChannelImpl implements _Channel {
   @override
   final String public;
   @override
-  @JsonKey(name: 'mass_mailing')
-  final bool massMailing;
-  @override
-  final bool moderation;
-  @override
-  @JsonKey(name: 'is_moderator')
-  final bool isModerator;
-  @override
   @JsonKey(name: 'group_based_subscription')
   final bool groupBasedSubscription;
   @override
@@ -398,9 +331,6 @@ class _$ChannelImpl implements _Channel {
   @JsonKey(name: 'message_unread_counter')
   final int messageUnreadCounter;
   @override
-  @JsonKey(name: 'custom_channel_name')
-  final bool customChannelName;
-  @override
   @JsonKey(name: 'is_pinned')
   final bool isPinned;
   @override
@@ -412,7 +342,7 @@ class _$ChannelImpl implements _Channel {
 
   @override
   String toString() {
-    return 'Channel(id: $id, name: $name, uuid: $uuid, state: $state, isMinimized: $isMinimized, channelType: $channelType, public: $public, massMailing: $massMailing, moderation: $moderation, isModerator: $isModerator, groupBasedSubscription: $groupBasedSubscription, createUid: $createUid, messageNeedactionCounter: $messageNeedactionCounter, messageUnreadCounter: $messageUnreadCounter, customChannelName: $customChannelName, isPinned: $isPinned, lastMessageId: $lastMessageId, seenMessageId: $seenMessageId)';
+    return 'Channel(id: $id, name: $name, uuid: $uuid, state: $state, isMinimized: $isMinimized, channelType: $channelType, public: $public, groupBasedSubscription: $groupBasedSubscription, createUid: $createUid, messageNeedactionCounter: $messageNeedactionCounter, messageUnreadCounter: $messageUnreadCounter, isPinned: $isPinned, lastMessageId: $lastMessageId, seenMessageId: $seenMessageId)';
   }
 
   @override
@@ -429,12 +359,6 @@ class _$ChannelImpl implements _Channel {
             (identical(other.channelType, channelType) ||
                 other.channelType == channelType) &&
             (identical(other.public, public) || other.public == public) &&
-            (identical(other.massMailing, massMailing) ||
-                other.massMailing == massMailing) &&
-            (identical(other.moderation, moderation) ||
-                other.moderation == moderation) &&
-            (identical(other.isModerator, isModerator) ||
-                other.isModerator == isModerator) &&
             (identical(other.groupBasedSubscription, groupBasedSubscription) ||
                 other.groupBasedSubscription == groupBasedSubscription) &&
             (identical(other.createUid, createUid) ||
@@ -444,8 +368,6 @@ class _$ChannelImpl implements _Channel {
                 other.messageNeedactionCounter == messageNeedactionCounter) &&
             (identical(other.messageUnreadCounter, messageUnreadCounter) ||
                 other.messageUnreadCounter == messageUnreadCounter) &&
-            (identical(other.customChannelName, customChannelName) ||
-                other.customChannelName == customChannelName) &&
             (identical(other.isPinned, isPinned) ||
                 other.isPinned == isPinned) &&
             (identical(other.lastMessageId, lastMessageId) ||
@@ -465,14 +387,10 @@ class _$ChannelImpl implements _Channel {
       isMinimized,
       channelType,
       public,
-      massMailing,
-      moderation,
-      isModerator,
       groupBasedSubscription,
       createUid,
       messageNeedactionCounter,
       messageUnreadCounter,
-      customChannelName,
       isPinned,
       lastMessageId,
       seenMessageId);
@@ -500,9 +418,6 @@ abstract class _Channel implements Channel {
       @JsonKey(name: 'is_minimized') required final bool isMinimized,
       @JsonKey(name: 'channel_type') required final String channelType,
       required final String public,
-      @JsonKey(name: 'mass_mailing') required final bool massMailing,
-      required final bool moderation,
-      @JsonKey(name: 'is_moderator') required final bool isModerator,
       @JsonKey(name: 'group_based_subscription')
       required final bool groupBasedSubscription,
       @JsonKey(name: 'create_uid') required final int createUid,
@@ -510,8 +425,6 @@ abstract class _Channel implements Channel {
       required final int messageNeedactionCounter,
       @JsonKey(name: 'message_unread_counter')
       required final int messageUnreadCounter,
-      @JsonKey(name: 'custom_channel_name')
-      required final bool customChannelName,
       @JsonKey(name: 'is_pinned') required final bool isPinned,
       @JsonKey(name: 'last_message_id', fromJson: Channel.parseIntNullable)
       final int? lastMessageId,
@@ -537,14 +450,6 @@ abstract class _Channel implements Channel {
   @override
   String get public;
   @override
-  @JsonKey(name: 'mass_mailing')
-  bool get massMailing;
-  @override
-  bool get moderation;
-  @override
-  @JsonKey(name: 'is_moderator')
-  bool get isModerator;
-  @override
   @JsonKey(name: 'group_based_subscription')
   bool get groupBasedSubscription;
   @override
@@ -556,9 +461,6 @@ abstract class _Channel implements Channel {
   @override
   @JsonKey(name: 'message_unread_counter')
   int get messageUnreadCounter;
-  @override
-  @JsonKey(name: 'custom_channel_name')
-  bool get customChannelName;
   @override
   @JsonKey(name: 'is_pinned')
   bool get isPinned;

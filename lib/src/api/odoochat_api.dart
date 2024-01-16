@@ -28,9 +28,19 @@ abstract class OdooChatApi {
     @Body() RpcPayload<MessageFetchParams> payload,
   );
 
+  @POST('/mail/channel/messages')
+  Future<RpcResponse<List<Message>>> getMessages(
+    @Body() RpcPayload<GetMessagesParams> payload,
+  );
+
   @POST('/web/dataset/call_kw/mail.channel/message_post')
   Future<RpcResponse<int>> messagePost(
     @Body() RpcPayload<MessagePostParams> payload,
+  );
+
+  @POST('/mail/message/post')
+  Future<RpcResponse<Message>> sendMessage(
+    @Body() RpcPayload<SendMessageParams> payload,
   );
 
   @POST('/longpolling/poll')

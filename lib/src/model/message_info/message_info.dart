@@ -54,6 +54,7 @@ class MessageInfoTyping extends MessageInfo {
     required this.isTyping,
     required this.partnerId,
     required this.partnerName,
+    this.channelId,
   });
 
   factory MessageInfoTyping.fromJson(Map<String, dynamic> json) =>
@@ -68,9 +69,16 @@ class MessageInfoTyping extends MessageInfo {
   final int partnerId;
   @JsonKey(name: 'partner_name')
   final String partnerName;
+  @JsonKey(name: 'channel_id')
+  final int? channelId;
 
   @override
-  List<Object?> get props => [isTyping, partnerId, partnerName];
+  List<Object?> get props => [
+        isTyping,
+        partnerId,
+        partnerName,
+        channelId,
+      ];
 
   @override
   String toString() =>

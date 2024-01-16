@@ -18,7 +18,6 @@ class Message with _$Message {
     required String model,
     @JsonKey(name: 'res_id') required int resId,
     @JsonKey(name: 'record_name') required String recordName,
-    @JsonKey(name: 'channel_ids') required List<int> channelIds,
     @JsonKey(name: 'partner_ids') required List<int> partnerIds,
     @JsonKey(name: 'starred_partner_ids') required List<int> starredPartnerIds,
     @JsonKey(name: 'moderation_status', fromJson: Message.parseModerationStatus)

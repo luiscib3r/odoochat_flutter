@@ -24,23 +24,17 @@ Future<void> main(List<String> args) async {
   print('Current Partner: ');
   print(messagingResult.currentPartner);
 
-  print('Channels: ');
-  print(messagingResult.channelSlots?.channels);
+  print('Channels, Private Messages, Groups: ');
+  print(messagingResult.channels);
 
-  print('Direct messages: ');
-  print(messagingResult.channelSlots?.directMessages);
-
-  print('Private groups: ');
-  print(messagingResult.channelSlots?.privateGroups);
-
-  if (messagingResult.channelSlots?.channels.isEmpty ?? true) {
+  if (messagingResult.channels.isEmpty) {
     print('No channels found');
     return;
   }
 
   // Fetch messages
   final messages = await odooChat.fetchMessages(
-    messagingResult.channelSlots!.channels.first.id,
+    messagingResult.channels.first.id,
   );
 
   print('Messages: ');
@@ -54,7 +48,7 @@ Future<void> main(List<String> args) async {
 
   // Send message
   final newMessageId = await odooChat.sendMessage(
-    channelId: messagingResult.channelSlots!.channels.first.id,
+    channelId: messagingResult.channels.first.id,
     message: 'Test message from OdooChat Flutter',
   );
 

@@ -36,8 +36,6 @@ mixin _$Message {
   int get resId => throw _privateConstructorUsedError;
   @JsonKey(name: 'record_name')
   String get recordName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'channel_ids')
-  List<int> get channelIds => throw _privateConstructorUsedError;
   @JsonKey(name: 'partner_ids')
   List<int> get partnerIds => throw _privateConstructorUsedError;
   @JsonKey(name: 'starred_partner_ids')
@@ -88,7 +86,6 @@ abstract class $MessageCopyWith<$Res> {
       String model,
       @JsonKey(name: 'res_id') int resId,
       @JsonKey(name: 'record_name') String recordName,
-      @JsonKey(name: 'channel_ids') List<int> channelIds,
       @JsonKey(name: 'partner_ids') List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids') List<int> starredPartnerIds,
       @JsonKey(
@@ -132,7 +129,6 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? model = null,
     Object? resId = null,
     Object? recordName = null,
-    Object? channelIds = null,
     Object? partnerIds = null,
     Object? starredPartnerIds = null,
     Object? moderationStatus = freezed,
@@ -189,10 +185,6 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.recordName
           : recordName // ignore: cast_nullable_to_non_nullable
               as String,
-      channelIds: null == channelIds
-          ? _value.channelIds
-          : channelIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
       partnerIds: null == partnerIds
           ? _value.partnerIds
           : partnerIds // ignore: cast_nullable_to_non_nullable
@@ -280,7 +272,6 @@ abstract class _$$MessageImplCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String model,
       @JsonKey(name: 'res_id') int resId,
       @JsonKey(name: 'record_name') String recordName,
-      @JsonKey(name: 'channel_ids') List<int> channelIds,
       @JsonKey(name: 'partner_ids') List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids') List<int> starredPartnerIds,
       @JsonKey(
@@ -323,7 +314,6 @@ class __$$MessageImplCopyWithImpl<$Res>
     Object? model = null,
     Object? resId = null,
     Object? recordName = null,
-    Object? channelIds = null,
     Object? partnerIds = null,
     Object? starredPartnerIds = null,
     Object? moderationStatus = freezed,
@@ -380,10 +370,6 @@ class __$$MessageImplCopyWithImpl<$Res>
           ? _value.recordName
           : recordName // ignore: cast_nullable_to_non_nullable
               as String,
-      channelIds: null == channelIds
-          ? _value._channelIds
-          : channelIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
       partnerIds: null == partnerIds
           ? _value._partnerIds
           : partnerIds // ignore: cast_nullable_to_non_nullable
@@ -459,7 +445,6 @@ class _$MessageImpl implements _Message {
       required this.model,
       @JsonKey(name: 'res_id') required this.resId,
       @JsonKey(name: 'record_name') required this.recordName,
-      @JsonKey(name: 'channel_ids') required final List<int> channelIds,
       @JsonKey(name: 'partner_ids') required final List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids')
       required final List<int> starredPartnerIds,
@@ -482,7 +467,6 @@ class _$MessageImpl implements _Message {
       @JsonKey(name: 'module_icon') required this.moduleIcon,
       @JsonKey(name: 'sms_ids') required final List<int> smsIds})
       : _subtypeId = subtypeId,
-        _channelIds = channelIds,
         _partnerIds = partnerIds,
         _starredPartnerIds = starredPartnerIds,
         _notifications = notifications,
@@ -527,15 +511,6 @@ class _$MessageImpl implements _Message {
   @override
   @JsonKey(name: 'record_name')
   final String recordName;
-  final List<int> _channelIds;
-  @override
-  @JsonKey(name: 'channel_ids')
-  List<int> get channelIds {
-    if (_channelIds is EqualUnmodifiableListView) return _channelIds;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_channelIds);
-  }
-
   final List<int> _partnerIds;
   @override
   @JsonKey(name: 'partner_ids')
@@ -631,7 +606,7 @@ class _$MessageImpl implements _Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, body: $body, date: $date, author: $author, emailFrom: $emailFrom, messageType: $messageType, subtypeId: $subtypeId, model: $model, resId: $resId, recordName: $recordName, channelIds: $channelIds, partnerIds: $partnerIds, starredPartnerIds: $starredPartnerIds, moderationStatus: $moderationStatus, notifications: $notifications, atachments: $atachments, trackingValueIds: $trackingValueIds, needactionPartnerIds: $needactionPartnerIds, historyPartnerIds: $historyPartnerIds, isNote: $isNote, isDiscussion: $isDiscussion, subtypeDescription: $subtypeDescription, isNotification: $isNotification, moduleIcon: $moduleIcon, smsIds: $smsIds)';
+    return 'Message(id: $id, body: $body, date: $date, author: $author, emailFrom: $emailFrom, messageType: $messageType, subtypeId: $subtypeId, model: $model, resId: $resId, recordName: $recordName, partnerIds: $partnerIds, starredPartnerIds: $starredPartnerIds, moderationStatus: $moderationStatus, notifications: $notifications, atachments: $atachments, trackingValueIds: $trackingValueIds, needactionPartnerIds: $needactionPartnerIds, historyPartnerIds: $historyPartnerIds, isNote: $isNote, isDiscussion: $isDiscussion, subtypeDescription: $subtypeDescription, isNotification: $isNotification, moduleIcon: $moduleIcon, smsIds: $smsIds)';
   }
 
   @override
@@ -653,8 +628,6 @@ class _$MessageImpl implements _Message {
             (identical(other.resId, resId) || other.resId == resId) &&
             (identical(other.recordName, recordName) ||
                 other.recordName == recordName) &&
-            const DeepCollectionEquality()
-                .equals(other._channelIds, _channelIds) &&
             const DeepCollectionEquality()
                 .equals(other._partnerIds, _partnerIds) &&
             const DeepCollectionEquality()
@@ -697,7 +670,6 @@ class _$MessageImpl implements _Message {
         model,
         resId,
         recordName,
-        const DeepCollectionEquality().hash(_channelIds),
         const DeepCollectionEquality().hash(_partnerIds),
         const DeepCollectionEquality().hash(_starredPartnerIds),
         moderationStatus,
@@ -741,7 +713,6 @@ abstract class _Message implements Message {
       required final String model,
       @JsonKey(name: 'res_id') required final int resId,
       @JsonKey(name: 'record_name') required final String recordName,
-      @JsonKey(name: 'channel_ids') required final List<int> channelIds,
       @JsonKey(name: 'partner_ids') required final List<int> partnerIds,
       @JsonKey(name: 'starred_partner_ids')
       required final List<int> starredPartnerIds,
@@ -794,9 +765,6 @@ abstract class _Message implements Message {
   @override
   @JsonKey(name: 'record_name')
   String get recordName;
-  @override
-  @JsonKey(name: 'channel_ids')
-  List<int> get channelIds;
   @override
   @JsonKey(name: 'partner_ids')
   List<int> get partnerIds;

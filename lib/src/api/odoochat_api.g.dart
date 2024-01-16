@@ -119,6 +119,42 @@ class _OdooChatApi implements OdooChatApi {
   }
 
   @override
+  Future<RpcResponse<List<Message>>> getMessages(
+      RpcPayload<GetMessagesParams> payload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson((value) => value.toJson()));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RpcResponse<List<Message>>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/mail/channel/messages',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RpcResponse<List<Message>>.fromJson(
+      _result.data!,
+      (json) => json is List<dynamic>
+          ? json
+              .map<Message>((i) => Message.fromJson(i as Map<String, dynamic>))
+              .toList()
+          : List.empty(),
+    );
+    return value;
+  }
+
+  @override
   Future<RpcResponse<int>> messagePost(
       RpcPayload<MessagePostParams> payload) async {
     const _extra = <String, dynamic>{};
@@ -146,6 +182,38 @@ class _OdooChatApi implements OdooChatApi {
     final value = RpcResponse<int>.fromJson(
       _result.data!,
       (json) => json as int,
+    );
+    return value;
+  }
+
+  @override
+  Future<RpcResponse<Message>> sendMessage(
+      RpcPayload<SendMessageParams> payload) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(payload.toJson((value) => value.toJson()));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RpcResponse<Message>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/mail/message/post',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = RpcResponse<Message>.fromJson(
+      _result.data!,
+      (json) => Message.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

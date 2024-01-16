@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
@@ -9,7 +10,15 @@ import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 import 'package:odoochat/odoochat.dart'
-    show Channel, OdooChat, PollMessageMessage, PollResult;
+    show
+        Attachment,
+        InitMessagingResultExtension,
+        OdooChat,
+        PollMessageMessage,
+        PollResult,
+        PollResultExtension;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 // ignore: always_use_package_imports
 import 'chat_poll/chat_poll.dart';
@@ -37,14 +46,8 @@ class ChatBloc extends Cubit<OdooChatState> {
 
     final result = await odooChat.initMessaging();
 
-    final channels = (result.channelSlots != null
-            ? [
-                ...result.channelSlots!.channels,
-                ...result.channelSlots!.privateGroups,
-                ...result.channelSlots!.directMessages,
-              ]
-            : <Channel>[])
-        .map((e) => AppChannel(id: e.id, name: e.name));
+    final channels =
+        result.channels.map((e) => AppChannel(id: e.id, name: e.name));
 
     emit(
       state.copyWith(
@@ -60,10 +63,20 @@ class ChatBloc extends Cubit<OdooChatState> {
     _pollSubscription = chatPoll.stream.listen(_handlePollResults);
   }
 
+  Future<File> _downloadAttachment(Attachment attachment) async {
+    final directory = await getTemporaryDirectory();
+    final savePath = join(directory.path, attachment.filename);
+    final data = await odooChat.getAttachment(attachment.id);
+
+    final file = File(savePath);
+    await file.writeAsBytes(data);
+
+    return File(savePath);
+  }
+
   Future<void> _handlePollResults(List<PollResult> results) async {
     final newMessagesFuture = results
-        .where((e) => e.channel != null && e.channel!.isNotEmpty)
-        .where((e) => (e.channel!.last as int) == state.currentChannel?.id)
+        .where((e) => e.channelId == state.currentChannel?.id)
         .map((e) async {
       if (e.message != null && e.message is PollMessageMessage) {
         final message = (e.message! as PollMessageMessage).data;
@@ -76,7 +89,7 @@ class ChatBloc extends Cubit<OdooChatState> {
         final attachments = await Future.wait(
           message.atachments.map(
             (attach) async {
-              final saveFile = await odooChat.downloadAttachment(attach);
+              final saveFile = await _downloadAttachment(attach);
 
               if (attach.mimetype == 'image/jpeg' ||
                   attach.mimetype == 'image/png') {
@@ -121,7 +134,7 @@ class ChatBloc extends Cubit<OdooChatState> {
         .where((e) => e != null)
         .cast<List<Message>>()
         .expand((e) => e)
-        .where((e) => !state.messages.contains(e));
+        .where((e) => !state.messages.map((e) => e.id).contains(e.id));
 
     emit(
       state.copyWith(
@@ -147,7 +160,7 @@ class ChatBloc extends Cubit<OdooChatState> {
         final attachments = await Future.wait(
           e.atachments.map(
             (attach) async {
-              final saveFile = await odooChat.downloadAttachment(attach);
+              final saveFile = await _downloadAttachment(attach);
 
               if (attach.mimetype == 'image/jpeg' ||
                   attach.mimetype == 'image/png') {

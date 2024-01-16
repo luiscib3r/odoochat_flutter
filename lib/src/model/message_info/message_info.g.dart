@@ -11,6 +11,7 @@ MessageInfoTyping _$MessageInfoTypingFromJson(Map<String, dynamic> json) =>
       isTyping: json['is_typing'] as bool,
       partnerId: json['partner_id'] as int,
       partnerName: json['partner_name'] as String,
+      channelId: json['channel_id'] as int?,
     );
 
 Map<String, dynamic> _$MessageInfoTypingToJson(MessageInfoTyping instance) =>
@@ -18,6 +19,7 @@ Map<String, dynamic> _$MessageInfoTypingToJson(MessageInfoTyping instance) =>
       'is_typing': instance.isTyping,
       'partner_id': instance.partnerId,
       'partner_name': instance.partnerName,
+      'channel_id': instance.channelId,
     };
 
 MessageInfoTransient _$MessageInfoTransientFromJson(

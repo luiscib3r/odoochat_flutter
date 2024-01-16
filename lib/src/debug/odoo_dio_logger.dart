@@ -142,11 +142,11 @@ class OdooDioLogger extends Interceptor {
         _printPrettyMap(response.data as Map);
       } else if (response.data is Uint8List) {
         logPrint('║${_indent()}[');
-        // _printUint8List(response.data as Uint8List);
+        _printUint8List(response.data as Uint8List);
         logPrint('║${_indent()}]');
       } else if (response.data is List) {
         logPrint('║${_indent()}[');
-        // _printList(response.data as List);
+        _printList(response.data as List);
         logPrint('║${_indent()}]');
       } else {
         _printBlock(response.data.toString());
@@ -224,11 +224,11 @@ class OdooDioLogger extends Interceptor {
       } else if (value is List) {
         if (compact && _canFlattenList(value)) {
           logPrint('║${_indent(tabs)} $key: ${value.toString()}');
-        } /*else {
+        } else {
           logPrint('║${_indent(tabs)} $key: [');
           _printList(value, tabs: tabs);
           logPrint('║${_indent(tabs)} ]${isLast ? '' : ','}');
-        }*/
+        }
       } else {
         final msg = value.toString().replaceAll('\n', '');
         final indent = _indent(tabs);
@@ -248,35 +248,36 @@ class OdooDioLogger extends Interceptor {
     logPrint('║$initialIndent}${isListItem && !isLast ? ',' : ''}');
   }
 
-  // void _printList(List list, {int tabs = kInitialTab}) {
-  //   list.asMap().forEach((i, dynamic e) {
-  //     final isLast = i == list.length - 1;
-  //     if (e is Map) {
-  //       if (compact && _canFlattenMap(e)) {
-  //         logPrint('║${_indent(tabs)}  $e${!isLast ? ',' : ''}');
-  //       } else {
-  //         _printOdooMap(e,
-  //             initialTab: tabs + 1, isListItem: true, isLast: isLast);
-  //       }
-  //     } else {
-  //       logPrint('║${_indent(tabs + 2)} $e${isLast ? '' : ','}');
-  //     }
-  //   });
-  // }
+  void _printList(List list, {int tabs = kInitialTab}) {
+    list.asMap().forEach((i, dynamic e) {
+      final isLast = i == list.length - 1;
+      if (e is Map) {
+        if (compact && _canFlattenMap(e)) {
+          logPrint('║${_indent(tabs)}  $e${!isLast ? ',' : ''}');
+        } else {
+          _printPrettyMap(e,
+              initialTab: tabs + 1, isListItem: true, isLast: isLast);
+        }
+      } else {
+        logPrint('║${_indent(tabs + 2)} $e${isLast ? '' : ','}');
+      }
+    });
+  }
 
   // ignore: unused_element
-  // void _printUint8List(Uint8List list, {int tabs = kInitialTab}) {
-  //   final chunks = [];
-  //   for (var i = 0; i < list.length; i += chunkSize) {
-  //     chunks.add(
-  //       list.sublist(
-  //           i, i + chunkSize > list.length ? list.length : i + chunkSize),
-  //     );
-  //   }
-  //   for (final element in chunks) {
-  //     logPrint('║${_indent(tabs)} ${element.join(", ")}');
-  //   }
-  // }
+  void _printUint8List(Uint8List list, {int tabs = kInitialTab}) {
+    return;
+    // final chunks = [];
+    // for (var i = 0; i < list.length; i += chunkSize) {
+    //   chunks.add(
+    //     list.sublist(
+    //         i, i + chunkSize > list.length ? list.length : i + chunkSize),
+    //   );
+    // }
+    // for (final element in chunks) {
+    //   logPrint('║${_indent(tabs)} ${element.join(", ")}');
+    // }
+  }
 
   bool _canFlattenMap(Map map) {
     return map.values

@@ -18,8 +18,6 @@ _$MessageImpl _$$MessageImplFromJson(Map<String, dynamic> json) =>
       model: json['model'] as String,
       resId: json['res_id'] as int,
       recordName: json['record_name'] as String,
-      channelIds:
-          (json['channel_ids'] as List<dynamic>).map((e) => e as int).toList(),
       partnerIds:
           (json['partner_ids'] as List<dynamic>).map((e) => e as int).toList(),
       starredPartnerIds: (json['starred_partner_ids'] as List<dynamic>)
@@ -62,7 +60,6 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
       'model': instance.model,
       'res_id': instance.resId,
       'record_name': instance.recordName,
-      'channel_ids': instance.channelIds,
       'partner_ids': instance.partnerIds,
       'starred_partner_ids': instance.starredPartnerIds,
       'moderation_status': instance.moderationStatus,

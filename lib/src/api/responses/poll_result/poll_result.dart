@@ -16,16 +16,43 @@ class PollResult with _$PollResult {
       _$PollResultFromJson(json);
 }
 
+extension PollResultExtension on PollResult {
+  int? get channelId =>
+      (channel?.last as int?) ??
+      message?.payload?['channel_id'] as int? ??
+      message?.payload?['id'] as int?;
+}
+
 sealed class PollMessage<T> {
-  const PollMessage(this.data);
+  const PollMessage({
+    required this.data,
+    this.payload,
+  });
 
   static PollMessage<dynamic>? fromResult(Map<String, dynamic>? json) {
-    print(json);
-
     if (json == null) {
       return null;
     }
 
+    // Odoo 15
+    if (json['type'] == 'mail.channel.partner/typing_status') {
+      return PollMessageInfo(
+        data: MessageInfoTyping.fromJson(
+          json['payload'] as Map<String, dynamic>,
+        ),
+        payload: json['payload'] as Map<String, dynamic>,
+      );
+    }
+
+    if (json['type'] == 'mail.channel/new_message') {
+      final payload = json['payload'] as Map<String, dynamic>;
+      return PollMessageMessage(
+        data: Message.fromJson(payload['message'] as Map<String, dynamic>),
+        payload: json['payload'] as Map<String, dynamic>,
+      );
+    }
+
+    // Odoo 14
     if (json['message_type'] != null) {
       return PollMessageMessage.fromJson(json);
     }
@@ -38,11 +65,7 @@ sealed class PollMessage<T> {
       return PollMessageInfo.fromJson(json);
     }
 
-    throw OdooChatException(
-      code: 422,
-      message: 'Received invalid poll message',
-      data: json,
-    );
+    return null;
   }
 
   Map<String, dynamic> toJson() => switch (T) {
@@ -67,31 +90,44 @@ sealed class PollMessage<T> {
       };
 
   final T data;
+  final Map<String, dynamic>? payload;
 }
 
 class PollMessageMessage extends PollMessage<Message> {
-  const PollMessageMessage(super.data);
+  const PollMessageMessage({
+    required super.data,
+    super.payload,
+  });
 
   factory PollMessageMessage.fromJson(Map<String, dynamic> json) =>
       PollMessageMessage(
-        Message.fromJson(json),
+        data: Message.fromJson(json),
+        payload: json,
       );
 }
 
 class PollMessageChannel extends PollMessage<Channel> {
-  const PollMessageChannel(super.data);
+  const PollMessageChannel({
+    required super.data,
+    super.payload,
+  });
 
   factory PollMessageChannel.fromJson(Map<String, dynamic> json) =>
       PollMessageChannel(
-        Channel.fromJson(json),
+        data: Channel.fromJson(json),
+        payload: json,
       );
 }
 
 class PollMessageInfo extends PollMessage<MessageInfo> {
-  const PollMessageInfo(super.data);
+  const PollMessageInfo({
+    required super.data,
+    super.payload,
+  });
 
   factory PollMessageInfo.fromJson(Map<String, dynamic> json) =>
       PollMessageInfo(
-        MessageInfo.fromJson(json),
+        data: MessageInfo.fromJson(json),
+        payload: json,
       );
 }
