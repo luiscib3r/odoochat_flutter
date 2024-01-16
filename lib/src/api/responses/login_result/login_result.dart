@@ -17,7 +17,6 @@ class LoginResult with _$LoginResult {
     required String name,
     required String username,
     @JsonKey(name: 'partner_display_name') required String partnerDisplayName,
-    @JsonKey(name: 'company_id') required int companyId,
     @JsonKey(name: 'partner_id') required int partnerId,
     @JsonKey(name: 'web.base.url') required String webBaseUrl,
     @JsonKey(name: 'active_ids_limit') required int activeIdsLimit,
@@ -25,7 +24,6 @@ class LoginResult with _$LoginResult {
     @JsonKey(name: 'user_companies')
     required Map<String, dynamic> userCompanies,
     required Map<String, dynamic> currencies,
-    @JsonKey(name: 'show_effect') required String showEffect,
     @JsonKey(name: 'display_switch_company_menu')
     required bool displaySwitchCompanyMenu,
     @JsonKey(name: 'cache_hashes') required Map<String, dynamic> cacheHashes,
@@ -33,6 +31,7 @@ class LoginResult with _$LoginResult {
     @JsonKey(name: 'web_tours') required List<dynamic> webTours,
     @JsonKey(name: 'notification_type') required String notificationType,
     @JsonKey(name: 'odoobot_initialized') required bool odoobotInitialized,
+    @JsonKey(name: 'company_id') int? companyId,
   }) = _LoginResult;
 
   factory LoginResult.fromJson(Map<String, dynamic> json) =>

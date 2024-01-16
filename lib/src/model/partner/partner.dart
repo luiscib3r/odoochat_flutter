@@ -7,13 +7,14 @@ part 'partner.g.dart';
 class Partner with _$Partner {
   const factory Partner({
     required int id,
-    @JsonKey(name: 'display_name') required String displayName,
     required String name,
     required String email,
     required bool active,
     @JsonKey(name: 'im_status') required String imStatus,
-    @JsonKey(name: 'user_id') required int userId,
-    @JsonKey(name: 'is_internal_user') required bool isInternalUser,
+    @JsonKey(name: 'is_internal_user', defaultValue: false)
+    required bool isInternalUser,
+    @JsonKey(name: 'user_id') int? userId,
+    @JsonKey(name: 'display_name') String? displayName,
   }) = _Partner;
 
   factory Partner.fromJson(Map<String, dynamic> json) =>

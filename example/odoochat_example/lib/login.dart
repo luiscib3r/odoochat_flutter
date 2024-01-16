@@ -14,14 +14,10 @@ class LoginPage extends StatelessWidget {
     return FlutterLogin(
       title: 'OdooChat',
       onLogin: (data) async {
-        try {
-          await odooChat.login(
-            username: data.name,
-            password: data.password,
-          );
-        } catch (e) {
-          return e.toString();
-        }
+        await odooChat.login(
+          username: data.name,
+          password: data.password,
+        );
 
         return null;
       },

@@ -28,7 +28,6 @@ mixin _$Channel {
   bool get isMinimized => throw _privateConstructorUsedError;
   @JsonKey(name: 'channel_type')
   String get channelType => throw _privateConstructorUsedError;
-  String get public => throw _privateConstructorUsedError;
   @JsonKey(name: 'group_based_subscription')
   bool get groupBasedSubscription => throw _privateConstructorUsedError;
   @JsonKey(name: 'create_uid')
@@ -61,7 +60,6 @@ abstract class $ChannelCopyWith<$Res> {
       String state,
       @JsonKey(name: 'is_minimized') bool isMinimized,
       @JsonKey(name: 'channel_type') String channelType,
-      String public,
       @JsonKey(name: 'group_based_subscription') bool groupBasedSubscription,
       @JsonKey(name: 'create_uid') int createUid,
       @JsonKey(name: 'message_needaction_counter') int messageNeedactionCounter,
@@ -92,7 +90,6 @@ class _$ChannelCopyWithImpl<$Res, $Val extends Channel>
     Object? state = null,
     Object? isMinimized = null,
     Object? channelType = null,
-    Object? public = null,
     Object? groupBasedSubscription = null,
     Object? createUid = null,
     Object? messageNeedactionCounter = null,
@@ -125,10 +122,6 @@ class _$ChannelCopyWithImpl<$Res, $Val extends Channel>
       channelType: null == channelType
           ? _value.channelType
           : channelType // ignore: cast_nullable_to_non_nullable
-              as String,
-      public: null == public
-          ? _value.public
-          : public // ignore: cast_nullable_to_non_nullable
               as String,
       groupBasedSubscription: null == groupBasedSubscription
           ? _value.groupBasedSubscription
@@ -176,7 +169,6 @@ abstract class _$$ChannelImplCopyWith<$Res> implements $ChannelCopyWith<$Res> {
       String state,
       @JsonKey(name: 'is_minimized') bool isMinimized,
       @JsonKey(name: 'channel_type') String channelType,
-      String public,
       @JsonKey(name: 'group_based_subscription') bool groupBasedSubscription,
       @JsonKey(name: 'create_uid') int createUid,
       @JsonKey(name: 'message_needaction_counter') int messageNeedactionCounter,
@@ -205,7 +197,6 @@ class __$$ChannelImplCopyWithImpl<$Res>
     Object? state = null,
     Object? isMinimized = null,
     Object? channelType = null,
-    Object? public = null,
     Object? groupBasedSubscription = null,
     Object? createUid = null,
     Object? messageNeedactionCounter = null,
@@ -238,10 +229,6 @@ class __$$ChannelImplCopyWithImpl<$Res>
       channelType: null == channelType
           ? _value.channelType
           : channelType // ignore: cast_nullable_to_non_nullable
-              as String,
-      public: null == public
-          ? _value.public
-          : public // ignore: cast_nullable_to_non_nullable
               as String,
       groupBasedSubscription: null == groupBasedSubscription
           ? _value.groupBasedSubscription
@@ -285,7 +272,6 @@ class _$ChannelImpl implements _Channel {
       required this.state,
       @JsonKey(name: 'is_minimized') required this.isMinimized,
       @JsonKey(name: 'channel_type') required this.channelType,
-      required this.public,
       @JsonKey(name: 'group_based_subscription')
       required this.groupBasedSubscription,
       @JsonKey(name: 'create_uid') required this.createUid,
@@ -317,8 +303,6 @@ class _$ChannelImpl implements _Channel {
   @JsonKey(name: 'channel_type')
   final String channelType;
   @override
-  final String public;
-  @override
   @JsonKey(name: 'group_based_subscription')
   final bool groupBasedSubscription;
   @override
@@ -342,7 +326,7 @@ class _$ChannelImpl implements _Channel {
 
   @override
   String toString() {
-    return 'Channel(id: $id, name: $name, uuid: $uuid, state: $state, isMinimized: $isMinimized, channelType: $channelType, public: $public, groupBasedSubscription: $groupBasedSubscription, createUid: $createUid, messageNeedactionCounter: $messageNeedactionCounter, messageUnreadCounter: $messageUnreadCounter, isPinned: $isPinned, lastMessageId: $lastMessageId, seenMessageId: $seenMessageId)';
+    return 'Channel(id: $id, name: $name, uuid: $uuid, state: $state, isMinimized: $isMinimized, channelType: $channelType, groupBasedSubscription: $groupBasedSubscription, createUid: $createUid, messageNeedactionCounter: $messageNeedactionCounter, messageUnreadCounter: $messageUnreadCounter, isPinned: $isPinned, lastMessageId: $lastMessageId, seenMessageId: $seenMessageId)';
   }
 
   @override
@@ -358,7 +342,6 @@ class _$ChannelImpl implements _Channel {
                 other.isMinimized == isMinimized) &&
             (identical(other.channelType, channelType) ||
                 other.channelType == channelType) &&
-            (identical(other.public, public) || other.public == public) &&
             (identical(other.groupBasedSubscription, groupBasedSubscription) ||
                 other.groupBasedSubscription == groupBasedSubscription) &&
             (identical(other.createUid, createUid) ||
@@ -386,7 +369,6 @@ class _$ChannelImpl implements _Channel {
       state,
       isMinimized,
       channelType,
-      public,
       groupBasedSubscription,
       createUid,
       messageNeedactionCounter,
@@ -417,7 +399,6 @@ abstract class _Channel implements Channel {
       required final String state,
       @JsonKey(name: 'is_minimized') required final bool isMinimized,
       @JsonKey(name: 'channel_type') required final String channelType,
-      required final String public,
       @JsonKey(name: 'group_based_subscription')
       required final bool groupBasedSubscription,
       @JsonKey(name: 'create_uid') required final int createUid,
@@ -447,8 +428,6 @@ abstract class _Channel implements Channel {
   @override
   @JsonKey(name: 'channel_type')
   String get channelType;
-  @override
-  String get public;
   @override
   @JsonKey(name: 'group_based_subscription')
   bool get groupBasedSubscription;

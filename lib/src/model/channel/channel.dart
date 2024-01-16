@@ -12,7 +12,6 @@ class Channel with _$Channel {
     required String state,
     @JsonKey(name: 'is_minimized') required bool isMinimized,
     @JsonKey(name: 'channel_type') required String channelType,
-    required String public,
     @JsonKey(name: 'group_based_subscription')
     required bool groupBasedSubscription,
     @JsonKey(name: 'create_uid') required int createUid,

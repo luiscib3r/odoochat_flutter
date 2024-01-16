@@ -36,8 +36,6 @@ mixin _$LoginResult {
   String get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'partner_display_name')
   String get partnerDisplayName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'company_id')
-  int get companyId => throw _privateConstructorUsedError;
   @JsonKey(name: 'partner_id')
   int get partnerId => throw _privateConstructorUsedError;
   @JsonKey(name: 'web.base.url')
@@ -49,8 +47,6 @@ mixin _$LoginResult {
   @JsonKey(name: 'user_companies')
   Map<String, dynamic> get userCompanies => throw _privateConstructorUsedError;
   Map<String, dynamic> get currencies => throw _privateConstructorUsedError;
-  @JsonKey(name: 'show_effect')
-  String get showEffect => throw _privateConstructorUsedError;
   @JsonKey(name: 'display_switch_company_menu')
   bool get displaySwitchCompanyMenu => throw _privateConstructorUsedError;
   @JsonKey(name: 'cache_hashes')
@@ -63,6 +59,8 @@ mixin _$LoginResult {
   String get notificationType => throw _privateConstructorUsedError;
   @JsonKey(name: 'odoobot_initialized')
   bool get odoobotInitialized => throw _privateConstructorUsedError;
+  @JsonKey(name: 'company_id')
+  int? get companyId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -87,21 +85,20 @@ abstract class $LoginResultCopyWith<$Res> {
       String name,
       String username,
       @JsonKey(name: 'partner_display_name') String partnerDisplayName,
-      @JsonKey(name: 'company_id') int companyId,
       @JsonKey(name: 'partner_id') int partnerId,
       @JsonKey(name: 'web.base.url') String webBaseUrl,
       @JsonKey(name: 'active_ids_limit') int activeIdsLimit,
       @JsonKey(name: 'max_file_upload_size') int maxFileUploadSize,
       @JsonKey(name: 'user_companies') Map<String, dynamic> userCompanies,
       Map<String, dynamic> currencies,
-      @JsonKey(name: 'show_effect') String showEffect,
       @JsonKey(name: 'display_switch_company_menu')
       bool displaySwitchCompanyMenu,
       @JsonKey(name: 'cache_hashes') Map<String, dynamic> cacheHashes,
       @JsonKey(name: 'user_id') List<int> userId,
       @JsonKey(name: 'web_tours') List<dynamic> webTours,
       @JsonKey(name: 'notification_type') String notificationType,
-      @JsonKey(name: 'odoobot_initialized') bool odoobotInitialized});
+      @JsonKey(name: 'odoobot_initialized') bool odoobotInitialized,
+      @JsonKey(name: 'company_id') int? companyId});
 }
 
 /// @nodoc
@@ -127,20 +124,19 @@ class _$LoginResultCopyWithImpl<$Res, $Val extends LoginResult>
     Object? name = null,
     Object? username = null,
     Object? partnerDisplayName = null,
-    Object? companyId = null,
     Object? partnerId = null,
     Object? webBaseUrl = null,
     Object? activeIdsLimit = null,
     Object? maxFileUploadSize = null,
     Object? userCompanies = null,
     Object? currencies = null,
-    Object? showEffect = null,
     Object? displaySwitchCompanyMenu = null,
     Object? cacheHashes = null,
     Object? userId = null,
     Object? webTours = null,
     Object? notificationType = null,
     Object? odoobotInitialized = null,
+    Object? companyId = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -183,10 +179,6 @@ class _$LoginResultCopyWithImpl<$Res, $Val extends LoginResult>
           ? _value.partnerDisplayName
           : partnerDisplayName // ignore: cast_nullable_to_non_nullable
               as String,
-      companyId: null == companyId
-          ? _value.companyId
-          : companyId // ignore: cast_nullable_to_non_nullable
-              as int,
       partnerId: null == partnerId
           ? _value.partnerId
           : partnerId // ignore: cast_nullable_to_non_nullable
@@ -211,10 +203,6 @@ class _$LoginResultCopyWithImpl<$Res, $Val extends LoginResult>
           ? _value.currencies
           : currencies // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      showEffect: null == showEffect
-          ? _value.showEffect
-          : showEffect // ignore: cast_nullable_to_non_nullable
-              as String,
       displaySwitchCompanyMenu: null == displaySwitchCompanyMenu
           ? _value.displaySwitchCompanyMenu
           : displaySwitchCompanyMenu // ignore: cast_nullable_to_non_nullable
@@ -239,6 +227,10 @@ class _$LoginResultCopyWithImpl<$Res, $Val extends LoginResult>
           ? _value.odoobotInitialized
           : odoobotInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
+      companyId: freezed == companyId
+          ? _value.companyId
+          : companyId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -262,21 +254,20 @@ abstract class _$$LoginResultImplCopyWith<$Res>
       String name,
       String username,
       @JsonKey(name: 'partner_display_name') String partnerDisplayName,
-      @JsonKey(name: 'company_id') int companyId,
       @JsonKey(name: 'partner_id') int partnerId,
       @JsonKey(name: 'web.base.url') String webBaseUrl,
       @JsonKey(name: 'active_ids_limit') int activeIdsLimit,
       @JsonKey(name: 'max_file_upload_size') int maxFileUploadSize,
       @JsonKey(name: 'user_companies') Map<String, dynamic> userCompanies,
       Map<String, dynamic> currencies,
-      @JsonKey(name: 'show_effect') String showEffect,
       @JsonKey(name: 'display_switch_company_menu')
       bool displaySwitchCompanyMenu,
       @JsonKey(name: 'cache_hashes') Map<String, dynamic> cacheHashes,
       @JsonKey(name: 'user_id') List<int> userId,
       @JsonKey(name: 'web_tours') List<dynamic> webTours,
       @JsonKey(name: 'notification_type') String notificationType,
-      @JsonKey(name: 'odoobot_initialized') bool odoobotInitialized});
+      @JsonKey(name: 'odoobot_initialized') bool odoobotInitialized,
+      @JsonKey(name: 'company_id') int? companyId});
 }
 
 /// @nodoc
@@ -300,20 +291,19 @@ class __$$LoginResultImplCopyWithImpl<$Res>
     Object? name = null,
     Object? username = null,
     Object? partnerDisplayName = null,
-    Object? companyId = null,
     Object? partnerId = null,
     Object? webBaseUrl = null,
     Object? activeIdsLimit = null,
     Object? maxFileUploadSize = null,
     Object? userCompanies = null,
     Object? currencies = null,
-    Object? showEffect = null,
     Object? displaySwitchCompanyMenu = null,
     Object? cacheHashes = null,
     Object? userId = null,
     Object? webTours = null,
     Object? notificationType = null,
     Object? odoobotInitialized = null,
+    Object? companyId = freezed,
   }) {
     return _then(_$LoginResultImpl(
       uid: null == uid
@@ -356,10 +346,6 @@ class __$$LoginResultImplCopyWithImpl<$Res>
           ? _value.partnerDisplayName
           : partnerDisplayName // ignore: cast_nullable_to_non_nullable
               as String,
-      companyId: null == companyId
-          ? _value.companyId
-          : companyId // ignore: cast_nullable_to_non_nullable
-              as int,
       partnerId: null == partnerId
           ? _value.partnerId
           : partnerId // ignore: cast_nullable_to_non_nullable
@@ -384,10 +370,6 @@ class __$$LoginResultImplCopyWithImpl<$Res>
           ? _value._currencies
           : currencies // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>,
-      showEffect: null == showEffect
-          ? _value.showEffect
-          : showEffect // ignore: cast_nullable_to_non_nullable
-              as String,
       displaySwitchCompanyMenu: null == displaySwitchCompanyMenu
           ? _value.displaySwitchCompanyMenu
           : displaySwitchCompanyMenu // ignore: cast_nullable_to_non_nullable
@@ -412,6 +394,10 @@ class __$$LoginResultImplCopyWithImpl<$Res>
           ? _value.odoobotInitialized
           : odoobotInitialized // ignore: cast_nullable_to_non_nullable
               as bool,
+      companyId: freezed == companyId
+          ? _value.companyId
+          : companyId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -432,7 +418,6 @@ class _$LoginResultImpl implements _LoginResult {
       required this.name,
       required this.username,
       @JsonKey(name: 'partner_display_name') required this.partnerDisplayName,
-      @JsonKey(name: 'company_id') required this.companyId,
       @JsonKey(name: 'partner_id') required this.partnerId,
       @JsonKey(name: 'web.base.url') required this.webBaseUrl,
       @JsonKey(name: 'active_ids_limit') required this.activeIdsLimit,
@@ -440,7 +425,6 @@ class _$LoginResultImpl implements _LoginResult {
       @JsonKey(name: 'user_companies')
       required final Map<String, dynamic> userCompanies,
       required final Map<String, dynamic> currencies,
-      @JsonKey(name: 'show_effect') required this.showEffect,
       @JsonKey(name: 'display_switch_company_menu')
       required this.displaySwitchCompanyMenu,
       @JsonKey(name: 'cache_hashes')
@@ -448,7 +432,8 @@ class _$LoginResultImpl implements _LoginResult {
       @JsonKey(name: 'user_id') required final List<int> userId,
       @JsonKey(name: 'web_tours') required final List<dynamic> webTours,
       @JsonKey(name: 'notification_type') required this.notificationType,
-      @JsonKey(name: 'odoobot_initialized') required this.odoobotInitialized})
+      @JsonKey(name: 'odoobot_initialized') required this.odoobotInitialized,
+      @JsonKey(name: 'company_id') this.companyId})
       : _userContext = userContext,
         _serverVersionInfo = serverVersionInfo,
         _userCompanies = userCompanies,
@@ -500,9 +485,6 @@ class _$LoginResultImpl implements _LoginResult {
   @JsonKey(name: 'partner_display_name')
   final String partnerDisplayName;
   @override
-  @JsonKey(name: 'company_id')
-  final int companyId;
-  @override
   @JsonKey(name: 'partner_id')
   final int partnerId;
   @override
@@ -531,9 +513,6 @@ class _$LoginResultImpl implements _LoginResult {
     return EqualUnmodifiableMapView(_currencies);
   }
 
-  @override
-  @JsonKey(name: 'show_effect')
-  final String showEffect;
   @override
   @JsonKey(name: 'display_switch_company_menu')
   final bool displaySwitchCompanyMenu;
@@ -570,10 +549,13 @@ class _$LoginResultImpl implements _LoginResult {
   @override
   @JsonKey(name: 'odoobot_initialized')
   final bool odoobotInitialized;
+  @override
+  @JsonKey(name: 'company_id')
+  final int? companyId;
 
   @override
   String toString() {
-    return 'LoginResult(uid: $uid, isSystem: $isSystem, isAdmin: $isAdmin, userContext: $userContext, db: $db, serverVersion: $serverVersion, serverVersionInfo: $serverVersionInfo, name: $name, username: $username, partnerDisplayName: $partnerDisplayName, companyId: $companyId, partnerId: $partnerId, webBaseUrl: $webBaseUrl, activeIdsLimit: $activeIdsLimit, maxFileUploadSize: $maxFileUploadSize, userCompanies: $userCompanies, currencies: $currencies, showEffect: $showEffect, displaySwitchCompanyMenu: $displaySwitchCompanyMenu, cacheHashes: $cacheHashes, userId: $userId, webTours: $webTours, notificationType: $notificationType, odoobotInitialized: $odoobotInitialized)';
+    return 'LoginResult(uid: $uid, isSystem: $isSystem, isAdmin: $isAdmin, userContext: $userContext, db: $db, serverVersion: $serverVersion, serverVersionInfo: $serverVersionInfo, name: $name, username: $username, partnerDisplayName: $partnerDisplayName, partnerId: $partnerId, webBaseUrl: $webBaseUrl, activeIdsLimit: $activeIdsLimit, maxFileUploadSize: $maxFileUploadSize, userCompanies: $userCompanies, currencies: $currencies, displaySwitchCompanyMenu: $displaySwitchCompanyMenu, cacheHashes: $cacheHashes, userId: $userId, webTours: $webTours, notificationType: $notificationType, odoobotInitialized: $odoobotInitialized, companyId: $companyId)';
   }
 
   @override
@@ -597,8 +579,6 @@ class _$LoginResultImpl implements _LoginResult {
                 other.username == username) &&
             (identical(other.partnerDisplayName, partnerDisplayName) ||
                 other.partnerDisplayName == partnerDisplayName) &&
-            (identical(other.companyId, companyId) ||
-                other.companyId == companyId) &&
             (identical(other.partnerId, partnerId) ||
                 other.partnerId == partnerId) &&
             (identical(other.webBaseUrl, webBaseUrl) ||
@@ -611,8 +591,6 @@ class _$LoginResultImpl implements _LoginResult {
                 .equals(other._userCompanies, _userCompanies) &&
             const DeepCollectionEquality()
                 .equals(other._currencies, _currencies) &&
-            (identical(other.showEffect, showEffect) ||
-                other.showEffect == showEffect) &&
             (identical(
                     other.displaySwitchCompanyMenu, displaySwitchCompanyMenu) ||
                 other.displaySwitchCompanyMenu == displaySwitchCompanyMenu) &&
@@ -623,7 +601,9 @@ class _$LoginResultImpl implements _LoginResult {
             (identical(other.notificationType, notificationType) ||
                 other.notificationType == notificationType) &&
             (identical(other.odoobotInitialized, odoobotInitialized) ||
-                other.odoobotInitialized == odoobotInitialized));
+                other.odoobotInitialized == odoobotInitialized) &&
+            (identical(other.companyId, companyId) ||
+                other.companyId == companyId));
   }
 
   @JsonKey(ignore: true)
@@ -640,20 +620,19 @@ class _$LoginResultImpl implements _LoginResult {
         name,
         username,
         partnerDisplayName,
-        companyId,
         partnerId,
         webBaseUrl,
         activeIdsLimit,
         maxFileUploadSize,
         const DeepCollectionEquality().hash(_userCompanies),
         const DeepCollectionEquality().hash(_currencies),
-        showEffect,
         displaySwitchCompanyMenu,
         const DeepCollectionEquality().hash(_cacheHashes),
         const DeepCollectionEquality().hash(_userId),
         const DeepCollectionEquality().hash(_webTours),
         notificationType,
-        odoobotInitialized
+        odoobotInitialized,
+        companyId
       ]);
 
   @JsonKey(ignore: true)
@@ -685,7 +664,6 @@ abstract class _LoginResult implements LoginResult {
       required final String username,
       @JsonKey(name: 'partner_display_name')
       required final String partnerDisplayName,
-      @JsonKey(name: 'company_id') required final int companyId,
       @JsonKey(name: 'partner_id') required final int partnerId,
       @JsonKey(name: 'web.base.url') required final String webBaseUrl,
       @JsonKey(name: 'active_ids_limit') required final int activeIdsLimit,
@@ -694,7 +672,6 @@ abstract class _LoginResult implements LoginResult {
       @JsonKey(name: 'user_companies')
       required final Map<String, dynamic> userCompanies,
       required final Map<String, dynamic> currencies,
-      @JsonKey(name: 'show_effect') required final String showEffect,
       @JsonKey(name: 'display_switch_company_menu')
       required final bool displaySwitchCompanyMenu,
       @JsonKey(name: 'cache_hashes')
@@ -704,7 +681,8 @@ abstract class _LoginResult implements LoginResult {
       @JsonKey(name: 'notification_type')
       required final String notificationType,
       @JsonKey(name: 'odoobot_initialized')
-      required final bool odoobotInitialized}) = _$LoginResultImpl;
+      required final bool odoobotInitialized,
+      @JsonKey(name: 'company_id') final int? companyId}) = _$LoginResultImpl;
 
   factory _LoginResult.fromJson(Map<String, dynamic> json) =
       _$LoginResultImpl.fromJson;
@@ -736,9 +714,6 @@ abstract class _LoginResult implements LoginResult {
   @JsonKey(name: 'partner_display_name')
   String get partnerDisplayName;
   @override
-  @JsonKey(name: 'company_id')
-  int get companyId;
-  @override
   @JsonKey(name: 'partner_id')
   int get partnerId;
   @override
@@ -755,9 +730,6 @@ abstract class _LoginResult implements LoginResult {
   Map<String, dynamic> get userCompanies;
   @override
   Map<String, dynamic> get currencies;
-  @override
-  @JsonKey(name: 'show_effect')
-  String get showEffect;
   @override
   @JsonKey(name: 'display_switch_company_menu')
   bool get displaySwitchCompanyMenu;
@@ -776,6 +748,9 @@ abstract class _LoginResult implements LoginResult {
   @override
   @JsonKey(name: 'odoobot_initialized')
   bool get odoobotInitialized;
+  @override
+  @JsonKey(name: 'company_id')
+  int? get companyId;
   @override
   @JsonKey(ignore: true)
   _$$LoginResultImplCopyWith<_$LoginResultImpl> get copyWith =>

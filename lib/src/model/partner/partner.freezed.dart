@@ -21,17 +21,17 @@ Partner _$PartnerFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Partner {
   int get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'display_name')
-  String get displayName => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   bool get active => throw _privateConstructorUsedError;
   @JsonKey(name: 'im_status')
   String get imStatus => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
-  int get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_internal_user')
+  @JsonKey(name: 'is_internal_user', defaultValue: false)
   bool get isInternalUser => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int? get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'display_name')
+  String? get displayName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,13 +45,14 @@ abstract class $PartnerCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'display_name') String displayName,
       String name,
       String email,
       bool active,
       @JsonKey(name: 'im_status') String imStatus,
-      @JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'is_internal_user') bool isInternalUser});
+      @JsonKey(name: 'is_internal_user', defaultValue: false)
+      bool isInternalUser,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'display_name') String? displayName});
 }
 
 /// @nodoc
@@ -68,23 +69,19 @@ class _$PartnerCopyWithImpl<$Res, $Val extends Partner>
   @override
   $Res call({
     Object? id = null,
-    Object? displayName = null,
     Object? name = null,
     Object? email = null,
     Object? active = null,
     Object? imStatus = null,
-    Object? userId = null,
     Object? isInternalUser = null,
+    Object? userId = freezed,
+    Object? displayName = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -101,14 +98,18 @@ class _$PartnerCopyWithImpl<$Res, $Val extends Partner>
           ? _value.imStatus
           : imStatus // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int,
       isInternalUser: null == isInternalUser
           ? _value.isInternalUser
           : isInternalUser // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      displayName: freezed == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -122,13 +123,14 @@ abstract class _$$PartnerImplCopyWith<$Res> implements $PartnerCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      @JsonKey(name: 'display_name') String displayName,
       String name,
       String email,
       bool active,
       @JsonKey(name: 'im_status') String imStatus,
-      @JsonKey(name: 'user_id') int userId,
-      @JsonKey(name: 'is_internal_user') bool isInternalUser});
+      @JsonKey(name: 'is_internal_user', defaultValue: false)
+      bool isInternalUser,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'display_name') String? displayName});
 }
 
 /// @nodoc
@@ -143,23 +145,19 @@ class __$$PartnerImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? displayName = null,
     Object? name = null,
     Object? email = null,
     Object? active = null,
     Object? imStatus = null,
-    Object? userId = null,
     Object? isInternalUser = null,
+    Object? userId = freezed,
+    Object? displayName = freezed,
   }) {
     return _then(_$PartnerImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -176,14 +174,18 @@ class __$$PartnerImplCopyWithImpl<$Res>
           ? _value.imStatus
           : imStatus // ignore: cast_nullable_to_non_nullable
               as String,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int,
       isInternalUser: null == isInternalUser
           ? _value.isInternalUser
           : isInternalUser // ignore: cast_nullable_to_non_nullable
               as bool,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      displayName: freezed == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -193,22 +195,20 @@ class __$$PartnerImplCopyWithImpl<$Res>
 class _$PartnerImpl implements _Partner {
   const _$PartnerImpl(
       {required this.id,
-      @JsonKey(name: 'display_name') required this.displayName,
       required this.name,
       required this.email,
       required this.active,
       @JsonKey(name: 'im_status') required this.imStatus,
-      @JsonKey(name: 'user_id') required this.userId,
-      @JsonKey(name: 'is_internal_user') required this.isInternalUser});
+      @JsonKey(name: 'is_internal_user', defaultValue: false)
+      required this.isInternalUser,
+      @JsonKey(name: 'user_id') this.userId,
+      @JsonKey(name: 'display_name') this.displayName});
 
   factory _$PartnerImpl.fromJson(Map<String, dynamic> json) =>
       _$$PartnerImplFromJson(json);
 
   @override
   final int id;
-  @override
-  @JsonKey(name: 'display_name')
-  final String displayName;
   @override
   final String name;
   @override
@@ -219,15 +219,18 @@ class _$PartnerImpl implements _Partner {
   @JsonKey(name: 'im_status')
   final String imStatus;
   @override
-  @JsonKey(name: 'user_id')
-  final int userId;
-  @override
-  @JsonKey(name: 'is_internal_user')
+  @JsonKey(name: 'is_internal_user', defaultValue: false)
   final bool isInternalUser;
+  @override
+  @JsonKey(name: 'user_id')
+  final int? userId;
+  @override
+  @JsonKey(name: 'display_name')
+  final String? displayName;
 
   @override
   String toString() {
-    return 'Partner(id: $id, displayName: $displayName, name: $name, email: $email, active: $active, imStatus: $imStatus, userId: $userId, isInternalUser: $isInternalUser)';
+    return 'Partner(id: $id, name: $name, email: $email, active: $active, imStatus: $imStatus, isInternalUser: $isInternalUser, userId: $userId, displayName: $displayName)';
   }
 
   @override
@@ -236,22 +239,22 @@ class _$PartnerImpl implements _Partner {
         (other.runtimeType == runtimeType &&
             other is _$PartnerImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.displayName, displayName) ||
-                other.displayName == displayName) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.active, active) || other.active == active) &&
             (identical(other.imStatus, imStatus) ||
                 other.imStatus == imStatus) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.isInternalUser, isInternalUser) ||
-                other.isInternalUser == isInternalUser));
+                other.isInternalUser == isInternalUser) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, displayName, name, email,
-      active, imStatus, userId, isInternalUser);
+  int get hashCode => Object.hash(runtimeType, id, name, email, active,
+      imStatus, isInternalUser, userId, displayName);
 
   @JsonKey(ignore: true)
   @override
@@ -269,23 +272,21 @@ class _$PartnerImpl implements _Partner {
 
 abstract class _Partner implements Partner {
   const factory _Partner(
-      {required final int id,
-      @JsonKey(name: 'display_name') required final String displayName,
-      required final String name,
-      required final String email,
-      required final bool active,
-      @JsonKey(name: 'im_status') required final String imStatus,
-      @JsonKey(name: 'user_id') required final int userId,
-      @JsonKey(name: 'is_internal_user')
-      required final bool isInternalUser}) = _$PartnerImpl;
+          {required final int id,
+          required final String name,
+          required final String email,
+          required final bool active,
+          @JsonKey(name: 'im_status') required final String imStatus,
+          @JsonKey(name: 'is_internal_user', defaultValue: false)
+          required final bool isInternalUser,
+          @JsonKey(name: 'user_id') final int? userId,
+          @JsonKey(name: 'display_name') final String? displayName}) =
+      _$PartnerImpl;
 
   factory _Partner.fromJson(Map<String, dynamic> json) = _$PartnerImpl.fromJson;
 
   @override
   int get id;
-  @override
-  @JsonKey(name: 'display_name')
-  String get displayName;
   @override
   String get name;
   @override
@@ -296,11 +297,14 @@ abstract class _Partner implements Partner {
   @JsonKey(name: 'im_status')
   String get imStatus;
   @override
-  @JsonKey(name: 'user_id')
-  int get userId;
-  @override
-  @JsonKey(name: 'is_internal_user')
+  @JsonKey(name: 'is_internal_user', defaultValue: false)
   bool get isInternalUser;
+  @override
+  @JsonKey(name: 'user_id')
+  int? get userId;
+  @override
+  @JsonKey(name: 'display_name')
+  String? get displayName;
   @override
   @JsonKey(ignore: true)
   _$$PartnerImplCopyWith<_$PartnerImpl> get copyWith =>
